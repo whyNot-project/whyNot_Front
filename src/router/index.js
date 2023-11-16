@@ -1,23 +1,59 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "@/views/HomeView.vue";
+import TestView from "@/views/TestView.vue";
+import RegistUserView from "@/views/RegistUserView.vue";
+import ActivityView from "@/views/ActivityView.vue";
+import CrewView from "@/views/CrewView.vue";
+import crewDetail from "@/components/crew/crewDetail.vue";
+import RegistCrewView from "@/views/RegistCrewView.vue";
+import WnbtiView from "@/views/WnbtiView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView
+      path: "/",
+      name: "home",
+      component: HomeView,
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
-  ]
-})
+      path: "/test",
+      name: "test",
+      component: TestView,
+    },
+    {
+      path: "/registUser",
+      name: "registUser",
+      component: RegistUserView,
+    },
+    {
+      path: "/activity",
+      name: "activity",
+      component: ActivityView,
+    },
+    {
+      //이 자체가 전체crew
+      path: "/crew",
+      component: CrewView,
+      children: [
+        {
+          path: ":crewId",
+          name: "crewDetail",
+          component: crewDetail,
+        },
+      ],
+    },
+    {
+      path: "/registCrew",
+      name: "registCrew",
+      component: RegistCrewView,
+    },
+    {
+      path: "/wnbti",
+      name: "wnbti",
+      component: WnbtiView,
+    },
+  ],
+});
 
-export default router
+export default router;
