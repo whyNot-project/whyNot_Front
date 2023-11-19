@@ -3,7 +3,7 @@
     <ImageCarousel />
     <div class="text">
       <p class="welcomeText">처음이신가요?</p>
-      <a href="/activity" class="goActivityButton">
+      <a href="/test" class="goActivityButton">
         <p>나에게 맞는 운동 찾기</p>
         <img src="@/assets/arrowLeft.png" class="arrowIcon" />
       </a>
