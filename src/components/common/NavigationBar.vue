@@ -67,8 +67,12 @@
             Sign In
           </v-btn>
         </v-form>
-        <div v-else>
+        <div v-else class="loginInfo">
           <p>{{ nickname }}</p>
+          <button @click="showCalendar">달력 보기 📆</button>
+          <template v-if="calendar">
+            <FullCalendar class="calendar" />
+          </template>
           <button @click="logout">로그아웃</button>
         </div>
       </div>
@@ -80,6 +84,7 @@
 import { ref, onMounted, watch } from "vue";
 import http from "@/util/http-commons.js";
 import { useRouter } from "vue-router";
+import FullCalendar from "./FullCalendar.vue";
 
 const sideBarShow = ref(false);
 const firstRender = ref(true);
@@ -93,6 +98,10 @@ const password = ref();
 const loginStatus = ref(false);
 const nickname = ref(localStorage.getItem("nickname"));
 const accessToken = ref(localStorage.getItem("accessToken"));
+const calendar = ref(false);
+const showCalendar = () => {
+  calendar.value = !calendar.value;
+};
 
 onMounted(() => {
   if (accessToken.value) loginStatus.value = true;
@@ -235,5 +244,12 @@ nav {
 .loginForm {
   width: 220px;
   margin: 120px auto 0 auto;
+}
+
+.loginInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>
