@@ -68,8 +68,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import http from "@/util/http-commons.js";
+import { useRoute } from "vue-router";
 
 const sideBarShow = ref(false);
 const firstRender = ref(true);

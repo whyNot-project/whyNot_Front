@@ -5,11 +5,11 @@
     <img :src="currentQuestion.imgSrc" class="questionImg" />
     <button class="option" @click="selectOption(0)">
       {{ currentQuestion.option1 }}
-      <img src="@/assets/arrowLeft.png" class="arrowIcon" />
+      <img src="@/assets/arrow1.png" class="arrowIcon" />
     </button>
     <button class="option" @click="selectOption(1)">
       {{ currentQuestion.option2 }}
-      <img src="@/assets/arrowLeft.png" class="arrowIcon" />
+      <img src="@/assets/arrow1.png" class="arrowIcon" />
     </button>
   </div>
 </template>

@@ -5,7 +5,7 @@
       <p class="welcomeText">처음이신가요?</p>
       <a href="/test" class="goActivityButton" @click="initTestAnswer">
         <p>나에게 맞는 운동 찾기</p>
-        <img src="@/assets/arrowLeft.png" class="arrowIcon" />
+        <img src="@/assets/arrow1.png" class="arrowIcon" />
       </a>
     </div>
   </div>
