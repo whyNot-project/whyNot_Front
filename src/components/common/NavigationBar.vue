@@ -12,7 +12,10 @@
       </div>
       <img src="@/assets/logo.png" class="logoImg" />
       <div class="userNav">
-        <button class="loginButton">로그인</button>
+        <button v-if="!loginStatus" class="loginButton" @click="sideBarClick">
+          로그인
+        </button>
+        <button v-else class="helloText">{{ nickname }}님, 안녕하세요!</button>
         <img
           src="@/assets/sidebarIcon.png"
           class="sidebarIcon"
@@ -32,21 +35,76 @@
           class="sidebarIconIn"
           @click="sideBarClick"
         />
-        <input />
+        <v-form v-model="form" @submit.prevent="onSubmit" class="loginForm">
+          <v-text-field
+            v-model="id"
+            class="mb-2"
+            clearable
+            label="아이디"
+          ></v-text-field>
+
+          <v-text-field
+            v-model="password"
+            clearable
+            label="비밀번호"
+            placeholder="비밀번호를 입력해주세요"
+          ></v-text-field>
+
+          <br />
+
+          <v-btn
+            :disabled="!form"
+            block
+            size="large"
+            type="submit"
+            variant="elevated"
+          >
+            Sign In
+          </v-btn>
+        </v-form>
       </div>
     </nav>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import http from "@/util/http-commons.js";
 
 const sideBarShow = ref(false);
 const firstRender = ref(true);
 
+const form = ref();
+const id = ref();
+const password = ref();
+
+const loginStatus = ref(false);
+const nickname = ref(localStorage.getItem("nickname"));
+const accessToken = ref(localStorage.getItem("accessToken"));
+
+onMounted(() => {
+  if (accessToken.value) loginStatus.value = true;
+  else loginStatus.value = false;
+});
+
 const sideBarClick = () => {
-  firstRender.value = false;
+  if (firstRender.value) firstRender.value = false;
   sideBarShow.value = !sideBarShow.value;
+};
+const onSubmit = () => {
+  http
+    .post("login", {
+      userId: id.value,
+      password: password.value,
+    })
+    .then((res) => {
+      localStorage.setItem("accessToken", res.data["access-token"]);
+      localStorage.setItem("userId", id.value);
+      localStorage.setItem("nickname", res.data["nickname"]);
+      sideBarShow.value = !sideBarShow.value;
+      loginStatus.value = true;
+      nickname.value = localStorage.getItem("nickname");
+    });
 };
 </script>
 
@@ -93,6 +151,16 @@ nav {
   font-weight: 600;
   font-size: 16px;
   margin-right: 20px;
+}
+
+.helloText {
+  background-color: transparent;
+  border: none;
+  height: 40px;
+  width: 180px;
+  font-weight: 600;
+  font-size: 16px;
+  margin-right: 10px;
 }
 
 .userNav {
@@ -145,5 +213,10 @@ nav {
 .firstRender {
   /* 첫 렌더링 시 애니메이션 보이지 않도록 */
   display: none;
+}
+
+.loginForm {
+  width: 220px;
+  margin: 120px auto 0 auto;
 }
 </style>
