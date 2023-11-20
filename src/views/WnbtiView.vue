@@ -16,6 +16,9 @@
       {{ color }}색의 불꽃을 가지고 계신
       {{ loginStatus ? nickname + "님!" : "당신!" }} <br />
       같은 불꽃 색을 가진 크루와 함께 해보러 갈까요?
+      <v-btn variant="plain" class="goButton" @click="movePage">
+        Let's go! <img src="@/assets/arrow2.png" class="arrowIcon"
+      /></v-btn>
     </div>
   </div>
 </template>
@@ -23,6 +26,7 @@
 <script setup>
 import { useTestStore } from "@/stores/Test.js";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
 const store = useTestStore();
 const loginStatus = ref(false);
@@ -35,6 +39,11 @@ onMounted(() => {
   if (accessToken.value) loginStatus.value = true;
   else loginStatus.value = false;
 });
+
+const router = useRouter();
+const movePage = () => {
+  loginStatus.value ? router.push("/crew") : router.push("/registUser");
+};
 </script>
 
 <style scoped>
@@ -63,6 +72,7 @@ onMounted(() => {
   margin-top: 80px;
   font-size: 45px;
   font-weight: 700;
+  position: relative;
 }
 
 .text1 {
@@ -72,5 +82,18 @@ onMounted(() => {
 .text2 {
   display: flex;
   justify-content: right;
+}
+
+.goButton {
+  position: absolute;
+  bottom: -80px;
+  right: 10px;
+  font-size: 22px;
+}
+
+.arrowIcon {
+  width: 20px;
+  height: 20px;
+  margin: 5px 0 0 10px;
 }
 </style>
