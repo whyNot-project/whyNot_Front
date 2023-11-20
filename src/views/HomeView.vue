@@ -3,9 +3,9 @@
     <ImageCarousel />
     <div class="text">
       <p class="welcomeText">처음이신가요?</p>
-      <a href="/test" class="goActivityButton">
+      <a href="/test" class="goActivityButton" @click="initTestAnswer">
         <p>나에게 맞는 운동 찾기</p>
-        <img src="@/assets/arrowLeft.png" class="arrowIcon" />
+        <img src="@/assets/arrow1.png" class="arrowIcon" />
       </a>
     </div>
   </div>
@@ -13,13 +13,20 @@
 
 <script setup>
 import ImageCarousel from "../components/home/ImageCarousel.vue";
+import { useTestStore } from "@/stores/Test.js";
+
+const store = useTestStore();
+
+const initTestAnswer = () => {
+  store.initAnswer();
+};
 </script>
 
 <style scoped>
 .main {
-  padding: 0 50px;
+  padding: 0 10%;
   display: flex;
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 .text {
@@ -46,5 +53,6 @@ import ImageCarousel from "../components/home/ImageCarousel.vue";
   font-weight: 400;
   text-decoration: none;
   color: black;
+  margin-top: 30px;
 }
 </style>
