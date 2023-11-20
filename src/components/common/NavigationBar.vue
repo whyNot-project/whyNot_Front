@@ -35,7 +35,12 @@
           class="sidebarIconIn"
           @click="sideBarClick"
         />
-        <v-form v-model="form" @submit.prevent="onSubmit" class="loginForm">
+        <v-form
+          v-if="!loginStatus"
+          v-model="form"
+          @submit.prevent="onSubmit"
+          class="loginForm"
+        >
           <v-text-field
             v-model="id"
             class="mb-2"
@@ -62,6 +67,10 @@
             Sign In
           </v-btn>
         </v-form>
+        <div v-else>
+          <p>{{ nickname }}</p>
+          <button @click="logout">로그아웃</button>
+        </div>
       </div>
     </nav>
   </div>
@@ -70,10 +79,12 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import http from "@/util/http-commons.js";
-import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 const sideBarShow = ref(false);
 const firstRender = ref(true);
+
+const router = useRouter();
 
 const form = ref();
 const id = ref();
@@ -87,6 +98,11 @@ onMounted(() => {
   if (accessToken.value) loginStatus.value = true;
   else loginStatus.value = false;
 });
+
+const logout = () => {
+  localStorage.clear();
+  router.go(0);
+};
 
 const sideBarClick = () => {
   if (firstRender.value) firstRender.value = false;
