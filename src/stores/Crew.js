@@ -17,7 +17,13 @@ export const useCrewStore = defineStore("crew", () => {
 
   const getMyCrewList = function () {
     console.log("내 크루 리스트 가져오기");
-    http.get("userCrew").then((res) => {
+  
+    // this.$route.params.userId를 사용하여 현재 라우트의 userId를 가져옴
+    const userId = this.$route.params.userId;
+  
+    http.get(`userCrew/${userId}`).then((res) => {
+      console.log(`${userId}`)
+      console.log(myCrewList.value)
       myCrewList.value = res.data;
     });
   };
