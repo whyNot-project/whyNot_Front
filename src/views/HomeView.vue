@@ -3,7 +3,7 @@
     <ImageCarousel />
     <div class="text">
       <p class="welcomeText">처음이신가요?</p>
-      <a href="/test" class="goActivityButton">
+      <a href="/test" class="goActivityButton" @click="initTestAnswer">
         <p>나에게 맞는 운동 찾기</p>
         <img src="@/assets/arrowLeft.png" class="arrowIcon" />
       </a>
@@ -13,6 +13,13 @@
 
 <script setup>
 import ImageCarousel from "../components/home/ImageCarousel.vue";
+import { useTestStore } from "@/stores/Test.js";
+
+const store = useTestStore();
+
+const initTestAnswer = () => {
+  store.initAnswer();
+};
 </script>
 
 <style scoped>

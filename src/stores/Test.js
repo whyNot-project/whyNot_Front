@@ -27,8 +27,11 @@ export const useTestStore = defineStore(
       ];
       return colors[colorIndex];
     });
+    const initAnswer = () => {
+      testAnswer.value = [];
+    };
 
-    return { testAnswer, getColor };
+    return { testAnswer, getColor, initAnswer };
   },
   { persist: true }
 );
