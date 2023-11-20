@@ -16,6 +16,8 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useTestStore } from "@/stores/Test.js";
 
 const questionList = [
   {
@@ -34,32 +36,33 @@ const questionList = [
   },
   {
     questionNum: 3,
-    question: "운동을 할 때 ",
+    question: "운동하고 있는 나, 내가 생각하기에 더 멋있는 나의 모습은?",
     imgSrc: "src/assets/mainThumbnail1.jpg",
-    option1: "근육량을 키우는 것을 목표로 하고 싶다.",
-    option2: "체력을 기르고 싶다.",
+    option1: "튜닝의 끝은 순정. 장비 없이도 충분히 즐기는 나의 모습",
+    option2: "운동은 장비빨. 멋진 장비와 함께 있는 내 모습",
   },
   {
     questionNum: 4,
-    question: "운동하고 있는 나, 내가 생각하기에 더 멋있는 나의 모습은?",
+    question: "운동을 할 때 ",
     imgSrc: "src/assets/mainThumbnail1.jpg",
-    option1: "운동은 장비빨. 멋진 장비와 함께 있는 내 모습",
-    option2: "튜닝의 끝은 순정. 장비 없이도 충분히 즐기는 나의 모습",
+    option1: "체력을 기르고 싶다.",
+    option2: "근육량을 키우는 것을 목표로 하고 싶다.",
   },
 ];
 
 let currentQuestionIndex = 0;
 
-const answer = [];
+const store = useTestStore();
+const router = useRouter();
 
 const currentQuestion = ref(questionList[currentQuestionIndex]);
 
 const selectOption = (option) => {
-  option === 0 ? answer.push(0) : answer.push(1);
+  option === 0 ? store.testAnswer.push(0) : store.testAnswer.push(1);
   currentQuestionIndex++;
 
   if (currentQuestionIndex === questionList.length) {
-    console.log(answer);
+    router.push("/wnbti");
   } else {
     currentQuestion.value = questionList[currentQuestionIndex];
   }
@@ -71,6 +74,7 @@ const selectOption = (option) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 4%;
 }
 
 .progress {
@@ -79,6 +83,7 @@ const selectOption = (option) => {
   font-size: 14px;
   padding: 5px 10px;
   border-radius: 15px;
+  margin-bottom: 30px;
 }
 
 .questionImg {

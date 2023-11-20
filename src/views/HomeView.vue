@@ -46,5 +46,6 @@ import ImageCarousel from "../components/home/ImageCarousel.vue";
   font-weight: 400;
   text-decoration: none;
   color: black;
+  margin-top: 30px;
 }
 </style>
