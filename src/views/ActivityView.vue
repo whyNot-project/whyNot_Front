@@ -1,41 +1,76 @@
 <template>
-    <div>
-      <h2>액티비티뷰</h2>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>번호</th>          
-          <th>썸네일</th>
-          <th>제목</th>
-          <th>내용</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="article in articles" :key="articleId">
-          <td>{{ article.articleId }}</td>
-          <td>{{ article.articleThumbnail }}</td>
-          <td>{{ article.articleTitle }}</td>
-          <td>{{ article.articleContent }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </template>
-  
-  <script setup>
-  import { computed, onBeforeMount } from 'vue';
-  import { useArticleStore } from '@/stores/Article';
+  <div>
+    <a class="activityTitle"> Activity에 관한 다양한 정보</a>
+  </div>
+  <ul>
+    <li v-for="article in articles" :key="articleId">
+      <img :src="article.articleThumbnail" />
+      <div class="activityCard">
+        <a :href="article.articleUrl" target="_blank">{{
+          article.articleTitle
+        }}</a>
+        <br />
+        <span>{{ article.articleContent }}</span>
+      </div>
+    </li>
+  </ul>
+</template>
 
-  const articleStore = useArticleStore();
+<script setup>
+import { computed, onBeforeMount } from "vue";
+import { useArticleStore } from "@/stores/Article";
 
-  let articles = computed(()=> articleStore.articleList);
+const articleStore = useArticleStore();
 
-  onBeforeMount(() => {
-    articleStore.getArticleList();
-  })
+let articles = computed(() => articleStore.articleList);
 
-  </script>
-  
-  <style scoped>
-  
-  </style>
+onBeforeMount(() => {
+  articleStore.getArticleList();
+});
+</script>
+
+<style scoped>
+.activityTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 30px;
+  padding: 40px;
+  margin: 20px;
+  color: #5e5d5d;
+}
+
+.activityCard {
+  display: block;
+}
+
+li {
+  margin: 10px;
+  text-align: left;
+  display: flex; /* Flexbox를 사용하여 아이템들을 가로로 정렬합니다. */
+  align-items: flex-start; /* 아이템들을 세로 상단으로 정렬합니다. */
+  padding: 20px;
+}
+
+img {
+  display: block;
+  margin-right: 20px; /* articleThumbnail과 articleTitle 사이의 간격을 조절합니다. */
+  width: 270px;
+  height: 180px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 23px;
+  padding: 20px;
+}
+
+span {
+  color: #666;
+  margin: 5px 0;
+  display: block; /* articleContent가 새로운 줄에서 시작하도록 합니다. */
+  padding: 20px;
+}
+</style>

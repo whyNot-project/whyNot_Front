@@ -7,6 +7,8 @@ import CrewView from "@/views/CrewView.vue";
 import crewDetail from "@/components/crew/crewDetail.vue";
 import RegistCrewView from "@/views/RegistCrewView.vue";
 import WnbtiView from "@/views/WnbtiView.vue";
+import AllCrewList from "@/components/crew/AllCrewList.vue";
+import MyCrewList from "@/components/crew/MyCrewList.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,10 +38,23 @@ const router = createRouter({
       path: "/crew",
       component: CrewView,
       children: [
+        //크루 상세
         {
           path: ":crewId",
           name: "crewDetail",
           component: crewDetail,
+        },
+        //전체크루
+        {
+          path: "AllCrewList",
+          name: "AllCrewList",
+          component: AllCrewList,
+        },
+        //내크루
+        {
+          path: "MyCrewList",
+          name: "MyCrewList",
+          component: MyCrewList,
         },
       ],
     },
