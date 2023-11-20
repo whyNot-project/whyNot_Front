@@ -17,9 +17,9 @@ import ImageCarousel from "../components/home/ImageCarousel.vue";
 
 <style scoped>
 .main {
-  padding: 0 50px;
+  padding: 0 10%;
   display: flex;
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 .text {
