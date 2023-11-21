@@ -2,7 +2,7 @@
   <div>
     <h2>CrewView</h2>
     <RouterLink :to="{ name: 'AllCrewList' }">전체크루</RouterLink> |
-    <RouterLink :to="{ name: 'MyCrewList', params: { } }">내크루</RouterLink> |
+    <RouterLink :to="{ name: 'MyCrewList' }">내크루</RouterLink> |
     <v-container>
       <v-row>
         <v-col cols="auto">
@@ -17,9 +17,7 @@
   </div>
 </template>
 
-<script setup>
-import { RouterView } from 'vue-router';
-</script>
+<script setup></script>
 
 <style scoped>
 a {

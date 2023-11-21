@@ -1,39 +1,6 @@
 <template>
   <div>
     <h3>전체크루 리스트</h3>
-    
-    <v-switch
-      v-model="isInside"
-      hide-details
-      true-value="1"
-      false-value="0"
-      :label="`Is Inside: ${isInside}`"
-    ></v-switch>
-
-    <v-switch
-      v-model="isSingle"
-      hide-details
-      true-value="1"
-      false-value="0"
-      :label="`Is Single: ${isSingle}`"
-    ></v-switch>
-
-    <v-switch
-      v-model="isCardio"
-      hide-details
-      true-value="1"
-      false-value="0"
-      :label="`Is Cardio: ${isCardio}`"
-    ></v-switch>
-
-    <v-switch
-      v-model="useEquip"
-      hide-details
-      true-value="1"
-      false-value="0"
-      :label="`Use Equipment: ${useEquip}`"
-    ></v-switch>
-
     <v-list lines="three">
       <v-list-item
         v-for="crew in crews"
@@ -59,7 +26,6 @@ onBeforeMount(() => {
   crewStore.getAllCrewList();
   console.log(crews);
 });
-
 </script>
 
 <style scoped></style>
