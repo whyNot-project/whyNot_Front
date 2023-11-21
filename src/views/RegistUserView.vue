@@ -38,12 +38,11 @@
         hint="최소 시, 구, 동을 모두 입력 해주세요."
       ></v-text-field>
 
-      <v-text-field
+      <v-file-input
         v-model="profileImg"
-        clearable
-        label="프로필 사진 주소"
-      ></v-text-field>
-
+        label="File input"
+        accept="image/png, image/jpeg, image/jpg"
+      ></v-file-input>
       <br />
 
       <v-btn
@@ -62,6 +61,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import http from "@/util/http-commons.js";
+import httpMultipart from "@/util/http-commons-multipart.js";
 import { useTestStore } from "@/stores/Test.js";
 import { useRouter } from "vue-router";
 
@@ -114,32 +114,34 @@ const address = ref();
 const profileImg = ref();
 
 const onSubmit = () => {
-  console.log(phoneNumber.value.replaceAll("-", ""));
-  http
-    .post("user", {
-      userId: id.value,
-      nickname: nickname.value,
-      password: password.value,
-      phoneNumber: phoneNumber.value.replaceAll("-", ""),
-      gender: gender.value == "남자" ? false : true,
-      location: address.value,
-      profileImg: profileImg.value,
-      type: getType(),
-    })
-    .then(() => {
-      //회원가입 성공하면 로그인 처리
-      http
-        .post("login", {
-          userId: id.value,
-          password: password.value,
-        })
-        .then((res) => {
-          localStorage.setItem("accessToken", res.data["access-token"]);
-          localStorage.setItem("userId", id.value);
-          localStorage.setItem("nickname", res.data["nickname"]);
-          router.go(0);
-        });
-    });
+  const formData = new FormData();
+  formData.append("userId", id.value);
+  formData.append("nickname", nickname.value);
+  formData.append("password", password.value);
+  formData.append("phoneNumber", phoneNumber.value.replaceAll("-", ""));
+  formData.append("gender", gender.value == "남자" ? false : true);
+  formData.append("location", address.value);
+  formData.append("type", getType());
+  formData.append("imgFile", profileImg.value[0]);
+
+  console.log(profileImg.value[0]);
+  for (let key of formData.keys()) {
+    console.log(key, ":", formData.get(key));
+  }
+  httpMultipart.post("user", formData).then(() => {
+    //회원가입 성공하면 로그인 처리
+    http
+      .post("login", {
+        userId: id.value,
+        password: password.value,
+      })
+      .then((res) => {
+        localStorage.setItem("accessToken", res.data["access-token"]);
+        localStorage.setItem("userId", id.value);
+        localStorage.setItem("nickname", res.data["nickname"]);
+        router.go(0);
+      });
+  });
 };
 
 const accessToken = ref(localStorage.getItem("accessToken"));
