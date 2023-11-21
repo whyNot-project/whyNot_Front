@@ -7,14 +7,14 @@
       <v-card-text>{{ crews.content }}</v-card-text>
 
       <v-card-actions>
-        <v-btn @click="$router.push('registCrew')">가입하기</v-btn>
+        <v-btn @click="$router.push('MyCrewList')">가입하기</v-btn>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 
 <script setup>
-import { onMounted, computed } from "vue";
+import { onBeforeMount, computed } from "vue";
 import { useCrewStore } from "@/stores/Crew";
 import { useRoute } from "vue-router";
 
@@ -23,8 +23,12 @@ const route = useRoute();
 
 let crews = computed(() => crewStore.crewDetail);
 
-onMounted(() => {
-  crewStore.getCrewDetail();
+const crewId = route.params.crewId;
+
+onBeforeMount(() => {
+  crewStore.getCrewDetail(crewId);
+  console.log(crewId);
+  console.log("asd");
 });
 </script>
 

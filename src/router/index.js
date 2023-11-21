@@ -40,13 +40,13 @@ const router = createRouter({
       children: [
         //크루 상세
         {
-          path: ":crewId",
+          path: "/crew/:crewId",
           name: "crewDetail",
           component: crewDetail,
         },
         //전체크루
         {
-          path: "AllCrewList",
+          path: "",
           name: "AllCrewList",
           component: AllCrewList,
         },

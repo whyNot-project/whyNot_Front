@@ -22,10 +22,11 @@ export const useCrewStore = defineStore("crew", () => {
 
   const crewDetail = ref({});
 
-  const getCrewDetail = function () {
+  const getCrewDetail = function (crewId) {
     console.log("크루 상세보기");
-    http.get(`userCrew`).then((res) => {
-      myCrewList.value = res.data;
+    http.get(`crew/${crewId}`).then((res) => {
+      console.log(res.data);
+      crewDetail.value = res.data;
     });
   };
 
