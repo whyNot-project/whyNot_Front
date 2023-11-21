@@ -7,7 +7,7 @@
         :key="crew.crewId"
         :title="crew.crewName"
         :subtitle="crew.content"
-        :href="crew.crewId"
+        @click="$router.push(`/crew/${crew.crewId}`)"
         :prepend-avatar="`/fires/${crew.tag}.png`"
       ></v-list-item>
     </v-list>
@@ -24,7 +24,6 @@ let crews = computed(() => crewStore.allCrewList);
 
 onBeforeMount(() => {
   crewStore.getAllCrewList();
-  console.log(crews);
 });
 </script>
 

@@ -5,27 +5,26 @@ import http from "@/util/http-commons";
 export const useCrewStore = defineStore("crew", () => {
   const allCrewList = ref({});
 
+  //전체 크루
   const getAllCrewList = function () {
-    console.log("전체 크루 리스트 가져오기");
     http.get("crew").then((res) => {
       allCrewList.value = res.data;
-      console.log(allCrewList.value);
     });
   };
 
   const myCrewList = ref({});
-
-  const getMyCrewList = function () {
-    console.log("내 크루 리스트 가져오기");
-    myCrewList.value = res.data;
+  //내 크루
+  const getMyCrewList = function (userId) {
+    http.get(`userCrew/${userId}`).then((res) => {
+      myCrewList.value = res.data;
+    });
   };
 
   const crewDetail = ref({});
-
-  const getCrewDetail = function () {
-    console.log("크루 상세보기");
-    http.get(`userCrew`).then((res) => {
-      myCrewList.value = res.data;
+  //크루 상세
+  const getCrewDetail = function (crewId) {
+    http.get(`crew/${crewId}`).then((res) => {
+      crewDetail.value = res.data;
     });
   };
 
