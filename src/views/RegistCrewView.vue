@@ -80,8 +80,6 @@ const onRegist = () => {
     })
     //내 크루에 추가
     .then((res) => {
-      console.log(res.data);
-      console.log(res.data[0].crewId);
       http.post("userCrew", {
         userId: userId,
         crewId: res.data[0].crewId,
