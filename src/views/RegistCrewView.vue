@@ -53,7 +53,10 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import http from "@/util/http-commons.js";
+
+const router = useRouter();
 
 const crewName = ref("");
 const schedule = ref("");
@@ -62,16 +65,28 @@ const tag = ref("");
 const location = ref("");
 const content = ref("");
 
+const userId = localStorage.getItem("userId");
+
 const onRegist = () => {
-  http.post("crew", {
-    crewName: crewName.value,
-    schedule: schedule.value,
-    memberNum: memberNum.value,
-    tag: getTag(),
-    location: location.value,
-    content: content.value,
-    leader: localStorage.getItem("userId"),
-  });
+  http
+    .post("crew", {
+      crewName: crewName.value,
+      schedule: schedule.value,
+      memberNum: memberNum.value,
+      tag: getTag(),
+      location: location.value,
+      content: content.value,
+      leader: userId,
+    })
+    //내 크루에 추가
+    .then((res) => {
+      console.log(res.data);
+      console.log(res.data[0].crewId);
+      http.post("userCrew", {
+        userId: userId,
+        crewId: res.data[0].crewId,
+      });
+    });
 };
 const items = ref([
   "러닝",

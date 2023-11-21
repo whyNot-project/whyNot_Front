@@ -25,7 +25,6 @@ const route = useRoute();
 let crews = computed(() => crewStore.crewDetail);
 
 const crewId = route.params.crewId;
-
 const userId = localStorage.getItem("userId");
 
 const joinCrew = () => {
