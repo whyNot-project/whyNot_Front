@@ -23,7 +23,7 @@ const crewStore = useCrewStore();
 let crews = computed(() => crewStore.myCrewList);
 
 onBeforeMount(() => {
-  crewStore.getyCrewList();
+  crewStore.getMyCrewList();
 });
 </script>
 
