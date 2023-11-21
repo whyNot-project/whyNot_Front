@@ -52,7 +52,7 @@ const router = createRouter({
         },
         //내크루
         {
-          path: "MyCrewList",
+          path: "/userCrew",
           name: "MyCrewList",
           component: MyCrewList,
         },

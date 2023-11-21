@@ -18,6 +18,7 @@
         <v-text-field
           v-model="memberNum"
           label="몇 명을 모집하고 싶으신가요?"
+          hint="숫자만 입력해주세요."
         ></v-text-field>
 
         <v-select
@@ -38,7 +39,11 @@
           :counter="50"
         ></v-text-field>
 
-        <v-btn @click="$router.push('crew')" type="submit" block class="mt-2"
+        <v-btn
+          @click="$router.push('/userCrew')"
+          type="submit"
+          block
+          class="mt-2"
           >크루 만들기</v-btn
         >
       </v-form>
@@ -58,8 +63,6 @@ const location = ref("");
 const content = ref("");
 
 const onRegist = () => {
-  console.log(crewName.value);
-  console.log(localStorage.getItem("userId"));
   http.post("crew", {
     crewName: crewName.value,
     schedule: schedule.value,

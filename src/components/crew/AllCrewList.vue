@@ -24,7 +24,6 @@ let crews = computed(() => crewStore.allCrewList);
 
 onBeforeMount(() => {
   crewStore.getAllCrewList();
-  console.log(crews);
 });
 </script>
 
