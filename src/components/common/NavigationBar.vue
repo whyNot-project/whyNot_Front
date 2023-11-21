@@ -68,6 +68,8 @@
           </v-btn>
         </v-form>
         <div v-else class="loginInfo">
+          <img :src="profileImg" />
+          <div>{{ profileImg }}</div>
           <p>{{ nickname }}</p>
           <button @click="showCalendar">달력 보기 📆</button>
           <template v-if="calendar">
@@ -88,6 +90,7 @@ import FullCalendar from "./FullCalendar.vue";
 
 const sideBarShow = ref(false);
 const firstRender = ref(true);
+const profileImg = ref(null);
 
 const router = useRouter();
 
@@ -98,14 +101,22 @@ const password = ref();
 const loginStatus = ref(false);
 const nickname = ref(localStorage.getItem("nickname"));
 const accessToken = ref(localStorage.getItem("accessToken"));
+const userId = ref(localStorage.getItem("userId"));
 const calendar = ref(false);
 const showCalendar = () => {
   calendar.value = !calendar.value;
 };
 
 onMounted(() => {
-  if (accessToken.value) loginStatus.value = true;
-  else loginStatus.value = false;
+  if (accessToken.value) {
+    loginStatus.value = true;
+    http.get(`user/profile/${userId.value}`).then((res) => {
+      const imageUrl = res.data;
+      const staticStrIndex = imageUrl.indexOf("static");
+      const imageUrlpath = imageUrl.substring(staticStrIndex);
+      profileImg.value = imageUrlpath;
+    });
+  } else loginStatus.value = false;
 });
 
 const logout = () => {
@@ -130,6 +141,10 @@ const onSubmit = () => {
       sideBarShow.value = !sideBarShow.value;
       loginStatus.value = true;
       nickname.value = localStorage.getItem("nickname");
+      http.get(`user/profile/${id.value}`).then((res) => {
+        const imageUrl = res.data;
+        profileImg.value = imageUrl;
+      });
     });
 };
 </script>
