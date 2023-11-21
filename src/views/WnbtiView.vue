@@ -13,7 +13,8 @@
       <p class="mainText text2">하는 걸 좋아해요.</p>
     </div>
     <div class="suggestText">
-      {{ color }}색의 불꽃을 가지고 계신
+      <div :style="{ color: textColor }" class="colorName">{{ color }}색</div>
+      의 불꽃을 가지고 계신
       {{ loginStatus ? nickname + "님!" : "당신!" }} <br />
       같은 불꽃 색을 가진 크루와 함께 해보러 갈까요?
       <v-btn variant="plain" class="goButton" @click="movePage">
@@ -25,7 +26,7 @@
 
 <script setup>
 import { useTestStore } from "@/stores/Test.js";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 
 const store = useTestStore();
@@ -38,6 +39,43 @@ const accessToken = ref(localStorage.getItem("accessToken"));
 onMounted(() => {
   if (accessToken.value) loginStatus.value = true;
   else loginStatus.value = false;
+});
+
+const textColor = computed(() => {
+  switch (color.value) {
+    case "네이비 피오니":
+      return "#223A5D";
+    case "다우니":
+      return "#82B8AD";
+    case "댄덜라이언":
+      return "#FFD966";
+    case "로즈버드":
+      return "#D9927A";
+    case "바닐라 아이스":
+      return "#E6D0CF";
+    case "세룰리안":
+      return "#9AB7D4";
+    case "스위트 핑크":
+      return "#F1A4AB";
+    case "스프라우트":
+      return "#BCC9A6";
+    case "앨리스 블루":
+      return "#EAEFF9";
+    case "오션딥스":
+      return "#4D6878";
+    case "오션베이":
+      return "#648181";
+    case "오아시스":
+      return "#F2DCB3";
+    case "웜플레임":
+      return "#B6634A";
+    case "캑터스":
+      return "#5A6C55";
+    case "퀄트스":
+      return "#D7D4E9";
+    case "페리글라스 블루":
+      return "#AEB1B0";
+  }
 });
 
 const router = useRouter();
@@ -73,6 +111,10 @@ const movePage = () => {
   font-size: 45px;
   font-weight: 700;
   position: relative;
+}
+
+.colorName {
+  display: inline-block;
 }
 
 .text1 {

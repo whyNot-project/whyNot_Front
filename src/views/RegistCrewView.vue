@@ -32,7 +32,7 @@
           v-model="location"
           label="모일 장소를 적어주세요."
         ></v-text-field>
-
+        <button @click="write">글 자동 생성</button>
         <v-text-field
           v-model="content"
           label="크루를 소개하는 글을 적어주세요."
@@ -52,9 +52,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import http from "@/util/http-commons.js";
+import axios from "axios";
 
 const router = useRouter();
 
@@ -80,14 +81,13 @@ const onRegist = () => {
     })
     //내 크루에 추가
     .then((res) => {
-      console.log(res.data);
-      console.log(res.data[0].crewId);
       http.post("userCrew", {
         userId: userId,
         crewId: res.data[0].crewId,
       });
     });
 };
+
 const items = ref([
   "러닝",
   "축구",
@@ -142,6 +142,57 @@ const getTag = () => {
     case "크로스핏":
       return 16;
   }
+};
+
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const getDateForm = (date, type) => {
+  const dateArr = date.split("-");
+  let result;
+  type === "month" ? (result = dateArr[1]) : (result = dateArr[2]);
+  if (result[0] === "0") return result[1];
+  else return result;
+};
+const write = () => {
+  const randomNum = random(1, 5);
+  let result;
+  switch (randomNum) {
+    case 1:
+      result =
+        "함께 즐겁게 " +
+        tag.value +
+        "할 사람 구해요 :) " +
+        getDateForm(schedule.value, "month") +
+        "월 " +
+        getDateForm(schedule.value, "day") +
+        "일 " +
+        location.value +
+        "에서 시간 되는 " +
+        memberNum.value +
+        "분을 모집합니다!";
+      break;
+    case 2:
+      result = "함께 즐겁게 " + tag.value + "할 사람 구해요 :) ";
+      break;
+    case 3:
+      result =
+        getDateForm(schedule.value, "month") +
+        "월 " +
+        getDateForm(schedule.value, "day") +
+        "일 " +
+        location.value +
+        "에서 시간 되는 분 ~!";
+      break;
+    case 4:
+      result = "같이 " + tag.value + "해요 :) 초보자 환영";
+      break;
+    case 5:
+      location.value + "에서 함께 " + tag.value + "해요!";
+      break;
+  }
+  content.value = result;
 };
 </script>
 

@@ -1,5 +1,6 @@
 <template>
   <h2>회원가입</h2>
+  <h5>당신의 운BTI '{{ color }}'색으로 가입 돼요 :)</h5>
   <div>
     <v-form v-model="form" @submit.prevent="onSubmit" class="registForm">
       <v-text-field
@@ -40,7 +41,7 @@
 
       <v-file-input
         v-model="profileImg"
-        label="File input"
+        label="프로필 사진"
         accept="image/png, image/jpeg, image/jpg"
       ></v-file-input>
       <br />
@@ -68,9 +69,10 @@ import { useRouter } from "vue-router";
 const store = useTestStore();
 const router = useRouter();
 
+const color = ref(store.getColor);
 const getType = () => {
-  switch (store.getColor) {
-    case "네이비":
+  switch (color) {
+    case "네이비 피오니":
       return 1;
     case "다우니":
       return 2;
@@ -100,10 +102,11 @@ const getType = () => {
       return 14;
     case "퀄트스":
       return 15;
-    case "페리":
+    case "페리글라스 블루":
       return 16;
   }
 };
+
 const form = ref();
 const id = ref();
 const nickname = ref();
@@ -155,12 +158,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
-h2 {
+h2,
+h5 {
   text-align: center;
   margin-top: 10px;
 }
 .registForm {
   width: 350px;
-  margin: 50px auto 0 auto;
+  margin: 30px auto 0 auto;
 }
 </style>
