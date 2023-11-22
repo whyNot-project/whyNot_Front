@@ -6,14 +6,14 @@
         @click="toggleSwitch(1)"
         v-model="switchValue"
         color="primary"
-        :label="` ${switchValue ? '유산소' : '무산소'}`"
+        :label="` ${switchValue ? '실외' : '실내'}`"
         hide-details
         :disabled="checkboxValue"
       ></v-switch>
       <v-switch
         @click="toggleSwitch(2)"
         v-model="switchValue2"
-        :label="` ${switchValue2 ? '실내' : '실외'}`"
+        :label="` ${switchValue2 ? '함께' : '혼자'}`"
         color="primary"
         hide-details
         :disabled="checkboxValue"
@@ -21,7 +21,7 @@
       <v-switch
         @click="toggleSwitch(3)"
         v-model="switchValue3"
-        :label="` ${switchValue3 ? '혼자' : '같이'}`"
+        :label="` ${switchValue3 ? '무산소' : '유산소'}`"
         color="primary"
         hide-details
         :disabled="checkboxValue"
@@ -29,7 +29,7 @@
       <v-switch
         @click="toggleSwitch(4)"
         v-model="switchValue4"
-        :label="` ${switchValue4 ? '기구사용' : '맨몸운동'}`"
+        :label="` ${switchValue4 ? '맨몸운동' : '기구사용'}`"
         color="primary"
         hide-details
         :disabled="checkboxValue"
@@ -154,6 +154,7 @@ const temp = function () {
       isSingle.value = res.data[0].isSingle;
       isCardio.value = res.data[0].isCardio;
       useEquip.value = res.data[0].useEquip;
+
       http
         .get("/crew/search", {
           //params로 가져오기
@@ -165,10 +166,10 @@ const temp = function () {
           },
         })
         .then(() => {
-          switchValue.value = isInside.value;
-          switchValue2.value = isSingle.value;
-          switchValue3.value = isCardio.value;
-          switchValue4.value = useEquip.value;
+          switchValue.value = Boolean(isInside.value);
+          switchValue2.value = Boolean(isSingle.value);
+          switchValue3.value = Boolean(isCardio.value);
+          switchValue4.value = Boolean(useEquip.value);
         });
     });
 };
