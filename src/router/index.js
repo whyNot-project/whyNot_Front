@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import TestView from "@/views/TestView.vue";
 import RegistUserView from "@/views/RegistUserView.vue";
-import ActivityView from "@/views/ActivityView.vue";
+import ArticleView from "@/views/ArticleView.vue";
 import CrewView from "@/views/CrewView.vue";
 import crewDetail from "@/components/crew/crewDetail.vue";
 import RegistCrewView from "@/views/RegistCrewView.vue";
@@ -29,9 +29,9 @@ const router = createRouter({
       component: RegistUserView,
     },
     {
-      path: "/activity",
-      name: "activity",
-      component: ActivityView,
+      path: "/article",
+      name: "article",
+      component: ArticleView,
     },
     {
       //이 자체가 전체crew

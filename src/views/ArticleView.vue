@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a class="activityTitle"> Activity에 관한 다양한 정보</a>
+    <a class="activityTitle">액티비티에 관한 다양한 정보</a>
   </div>
   <ul>
     <li v-for="article in articles" :key="articleId">
