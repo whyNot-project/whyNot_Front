@@ -4,7 +4,6 @@ import http from "@/util/http-commons";
 
 export const useCrewStore = defineStore("crew", () => {
   const allCrewList = ref({});
-
   //전체 크루
   const getAllCrewList = function () {
     http.get("crew").then((res) => {
@@ -28,6 +27,14 @@ export const useCrewStore = defineStore("crew", () => {
     });
   };
 
+  // const selectedCrews = ref({});
+  // //검색된 크루
+  // const getSelectedCrews = function () {
+  //   http.get("/crew/search").then((res) => {
+  //     selectedCrews.value = res.data;
+  //   });
+  // };
+
   return {
     allCrewList,
     getAllCrewList,
@@ -35,5 +42,7 @@ export const useCrewStore = defineStore("crew", () => {
     getMyCrewList,
     crewDetail,
     getCrewDetail,
+    // getSelectedCrews,
+    // selectedCrews,
   };
 });
