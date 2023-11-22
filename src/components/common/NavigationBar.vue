@@ -68,14 +68,18 @@
           </v-btn>
         </v-form>
         <div v-else class="loginInfo">
-          <img :src="profileImg" />
-          <div>{{ profileImg }}</div>
-          <p>{{ nickname }}</p>
-          <button @click="showCalendar">달력 보기 📆</button>
+          <img :src="profileImg" class="profileImg" />
+          <p class="profileNickname">{{ nickname }}</p>
+          <a
+            @click="showCalendar"
+            data-text="달력 보기 📆"
+            class="calendarButton"
+          >
+          </a>
           <template v-if="calendar">
             <FullCalendar class="calendar" />
           </template>
-          <button @click="logout">로그아웃</button>
+          <button @click="logout" class="logoutButton">로그아웃</button>
         </div>
       </div>
     </nav>
@@ -211,11 +215,11 @@ nav {
 }
 
 .sideBar {
-  position: absolute;
+  position: fixed;
   right: 0px;
   top: 0;
   background-color: #f5f5f5;
-  width: 250px;
+  width: 300px;
   height: 100vh;
   z-index: 10;
 }
@@ -229,7 +233,7 @@ nav {
 
 @keyframes show {
   from {
-    transform: translateX(250px);
+    transform: translateX(300px);
   }
   to {
     transform: translateX(0);
@@ -241,7 +245,7 @@ nav {
     transform: translateX(0px);
   }
   to {
-    transform: translateX(250px);
+    transform: translateX(300px);
   }
 }
 .hide {
@@ -267,5 +271,82 @@ nav {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.profileImg {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-top: 40px;
+}
+
+.profileNickname {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.calendarButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -320%);
+  width: 140px;
+  height: 45px;
+  line-height: 45px;
+  font-size: 15px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: #ccc;
+}
+.calendarButton:before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: grey;
+  color: #fff;
+  transition: 0.5s;
+  transform-origin: bottom;
+  transform: translatey(-100%) rotatex(90deg);
+}
+.calendarButton:hover:before {
+  transform: translatey(0) rotatex(0deg);
+}
+
+.calendarButton:after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: grey;
+  color: #fff;
+  transition: 0.5s;
+  transform-origin: top;
+  transform: translatey(0) rotatex(0deg);
+}
+.calendarButton:hover:after {
+  transform: translatey(100%) rotatex(90deg);
+}
+
+.calendar {
+  margin-top: 100px;
+  width: 240px;
+  font-size: 14px;
+}
+
+.logoutButton {
+  text-decoration: underline;
+  color: grey;
+  position: absolute;
+  bottom: 20px;
 }
 </style>

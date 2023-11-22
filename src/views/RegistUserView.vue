@@ -71,7 +71,7 @@ const router = useRouter();
 
 const color = ref(store.getColor);
 const getType = () => {
-  switch (color) {
+  switch (store.getColor) {
     case "네이비 피오니":
       return 1;
     case "다우니":

@@ -19,7 +19,7 @@ export default {
             display: "background",
           },
         ],
-        height: "400px",
+        height: "430px",
       },
     };
   },
@@ -29,3 +29,14 @@ export default {
 <template>
   <FullCalendar :options="calendarOptions" />
 </template>
+
+<style>
+/* November 2023 title부분 */
+.fc .fc-toolbar-title {
+  font-size: 15px;
+}
+
+.fc .fc-button {
+  font-size: 10px;
+}
+</style>
