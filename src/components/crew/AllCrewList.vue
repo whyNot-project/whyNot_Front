@@ -130,8 +130,6 @@ const searchCondition = () => {
 //페이지 들어왔을 때 사용자의 유형에 따라 검색조건 세팅
 
 const temp = function () {
-  //mounted로 바꾸던가....해.. 새로고침 할 때만 뜸
-
   const userId = localStorage.getItem("userId");
 
   const isInside = ref("");
@@ -144,6 +142,8 @@ const temp = function () {
       userId: userId,
     })
     .then((res) => {
+      console.log(res.data);
+
       isInside.value = res.data[0].isInside;
       isSingle.value = res.data[0].isSingle;
       isCardio.value = res.data[0].isCardio;
@@ -151,7 +151,6 @@ const temp = function () {
 
       http
         .get("/crew/search", {
-          //params로 가져오기
           params: {
             isInside: `${isInside.value}`,
             isSingle: `${isSingle.value}`,
