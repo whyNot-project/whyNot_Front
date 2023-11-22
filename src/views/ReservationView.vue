@@ -76,7 +76,7 @@ onMounted(() => {
 
   axios
     .get(
-      "http://openAPI.seoul.go.kr:8088/4c506d575063756a373371584f5776/xml/ListPublicReservationSport/1/10/테니스장"
+      "http://openAPI.seoul.go.kr:8088/4c506d575063756a373371584f5776/xml/ListPublicReservationSport/1/20/테니스장"
     )
     .then((res) => {
       var XmlNode = new DOMParser().parseFromString(res.data, "text/xml");

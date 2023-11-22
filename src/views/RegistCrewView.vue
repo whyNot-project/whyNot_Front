@@ -189,7 +189,7 @@ const write = () => {
       result = "같이 " + tag.value + "해요 :) 초보자 환영";
       break;
     case 5:
-      location.value + "에서 함께 " + tag.value + "해요!";
+      result = location.value + "에서 함께 " + tag.value + "해요!";
       break;
   }
   content.value = result;
