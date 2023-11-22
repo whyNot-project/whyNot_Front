@@ -32,7 +32,7 @@
           v-model="location"
           label="모일 장소를 적어주세요."
         ></v-text-field>
-        <button @click="write">글 자동 생성</button>
+        <button @click="write" class="writeButton">소개글 자동 생성 🪄</button>
         <v-text-field
           v-model="content"
           label="크루를 소개하는 글을 적어주세요."
@@ -52,12 +52,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref } from "vue";
 import http from "@/util/http-commons.js";
-import axios from "axios";
-
-const router = useRouter();
 
 const crewName = ref("");
 const schedule = ref("");
@@ -200,5 +196,29 @@ const write = () => {
 h2 {
   text-align: center;
   margin: 20px;
+}
+
+.writeButton {
+  flex: 1 1 auto;
+  margin-bottom: 10px;
+  padding: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  background-image: linear-gradient(
+    to right,
+    #f6d365 0%,
+    #fda085 51%,
+    #f6d365 100%
+  );
+}
+
+.writeButton:hover {
+  background-position: right center; /* change the direction of the change here */
 }
 </style>
