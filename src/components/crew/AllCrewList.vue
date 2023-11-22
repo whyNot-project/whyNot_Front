@@ -1,65 +1,50 @@
 <template>
-  <div>
-    <h3>전체크루 리스트</h3>
+  <h2>나와 맞는 크루 찾기</h2>
+  <div class="switch-container">
     <div class="switches">
-      <v-switch
-        @click="toggleSwitch(1)"
-        v-model="switchValue"
-        color="primary"
-        :label="` ${switchValue ? '실외' : '실내'}`"
-        hide-details
-        :disabled="checkboxValue"
-      ></v-switch>
-      <v-switch
-        @click="toggleSwitch(2)"
-        v-model="switchValue2"
-        :label="` ${switchValue2 ? '함께' : '혼자'}`"
-        color="primary"
-        hide-details
-        :disabled="checkboxValue"
-      ></v-switch>
-      <v-switch
-        @click="toggleSwitch(3)"
-        v-model="switchValue3"
-        :label="` ${switchValue3 ? '무산소' : '유산소'}`"
-        color="primary"
-        hide-details
-        :disabled="checkboxValue"
-      ></v-switch>
-      <v-switch
-        @click="toggleSwitch(4)"
-        v-model="switchValue4"
-        :label="` ${switchValue4 ? '맨몸운동' : '기구사용'}`"
-        color="primary"
-        hide-details
-        :disabled="checkboxValue"
-      ></v-switch>
-      <v-checkbox v-model="checkboxValue" label="전체 크루 보기"></v-checkbox>
+      <div class="switch-item" @click="toggleSwitch(1)">
+        <div class="switch-label">{{ switchValue ? '실외' : '실내' }}</div>
+        <div class="switch-toggle" :class="{ active: switchValue }"></div>
+      </div>
+      <div class="switch-item" @click="toggleSwitch(2)">
+        <div class="switch-label">{{ switchValue2 ? '함께' : '혼자' }}</div>
+        <div class="switch-toggle" :class="{ active: switchValue2 }"></div>
+      </div>
+      <div class="switch-item" @click="toggleSwitch(3)">
+        <div class="switch-label">{{ switchValue3 ? '무산소' : '유산소' }}</div>
+        <div class="switch-toggle" :class="{ active: switchValue3}"></div>
+      </div>
+      <div class="switch-item" @click="toggleSwitch(4)">
+        <div class="switch-label">{{ switchValue4 ? '맨몸운동' : '기구사용' }}</div>
+        <div class="switch-toggle" :class="{ active: switchValue4 }"></div>
+      </div>
+      <div class="switch-item">
+        <v-checkbox v-model="checkboxValue" label="전체 크루 보기"></v-checkbox>
+      </div>
     </div>
 
-    <v-list lines="three">
-      <v-list-item
-        v-if="checkboxValue"
-        v-for="crew in crews"
-        :key="crew.crewId"
-        :title="crew.crewName"
-        :subtitle="crew.content"
-        @click="$router.push(`/crew/${crew.crewId}`)"
-        :prepend-avatar="`/fires/${crew.tag}.png`"
-      ></v-list-item>
-    </v-list>
-
-    <v-list lines="three">
-      <v-list-item
-        v-if="!checkboxValue"
-        v-for="crew in selectedCrew"
-        :key="crew.crewId"
-        :title="crew.crewName"
-        :subtitle="crew.content"
-        @click="$router.push(`/crew/${crew.crewId}`)"
-        :prepend-avatar="`/fires/${crew.tag}.png`"
-      ></v-list-item>
-    </v-list>
+    <div class="crew-list">
+      <div v-if="checkboxValue" class="crew-card" v-for="crew in crews" :key="crew.crewId" @click="$router.push(`/crew/${crew.crewId}`)">
+        <img :src="`/fires/${crew.tag}.png`" alt="Crew Image" class="crew-avatar" />
+        <div class="crew-details">
+          <h2>{{ crew.crewName }}</h2>
+          <p style="font-weight: bold;">{{ crew.location }}</p>
+          <p>{{ crew.schedule }}</p>
+          <p>{{crew.memberNum - Math.floor(crew.memberNum/2)}} / {{ crew.memberNum }}명</p>
+          <p>{{ crew.content }}</p>
+        </div>
+      </div>
+      <div v-else class="crew-card" v-for="crew in selectedCrew" @click="$router.push(`/crew/${crew.crewId}`)">
+        <img :src="`/fires/${crew.tag}.png`" alt="Crew Image" class="crew-avatar" />
+        <div class="crew-details">
+          <h2>{{ crew.crewName }}</h2>
+          <p style="font-weight: bold;">{{ crew.location }}</p>
+          <p>{{ crew.schedule }}</p>
+          <p>{{crew.memberNum - Math.floor(crew.memberNum/2)}} / {{ crew.memberNum }}명</p>
+          <p>{{ crew.content }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -130,8 +115,6 @@ const searchCondition = () => {
 //페이지 들어왔을 때 사용자의 유형에 따라 검색조건 세팅
 
 const temp = function () {
-  //mounted로 바꾸던가....해.. 새로고침 할 때만 뜸
-
   const userId = localStorage.getItem("userId");
 
   const isInside = ref("");
@@ -151,7 +134,6 @@ const temp = function () {
 
       http
         .get("/crew/search", {
-          //params로 가져오기
           params: {
             isInside: `${isInside.value}`,
             isSingle: `${isSingle.value}`,
@@ -172,9 +154,79 @@ const temp = function () {
 </script>
 
 <style scoped>
-.switches {
+
+h2{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+.switch-container {
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
+
+.switches {
+  display: flex;
+  justify-content: center;
+}
+
+.switch-item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.switch-label {
+  margin-right: 8px;
+}
+
+.switch-toggle {
+  width: 30px;
+  height: 15px;
+  background-color: #ccc;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.switch-toggle.active {
+  background-color: #2196f3;
+}
+
+.crew-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.crew-card {
+  cursor: pointer;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.crew-card:hover {
+  transform: scale(1.05);
+}
+
+.crew-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.crew-details {
+  text-align: center;
+}
+
 </style>

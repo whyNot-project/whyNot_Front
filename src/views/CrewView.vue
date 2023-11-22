@@ -1,36 +1,66 @@
 <template>
-  <div>
-    <h2>CrewView</h2>
-    <RouterLink :to="{ name: 'AllCrewList' }">전체크루</RouterLink> |
-    <RouterLink :to="{ name: 'MyCrewList' }">내크루</RouterLink> |
-    <v-container>
-      <v-row>
-        <v-col cols="auto">
-          <v-btn @click="$router.push('/registCrew')" elevation="4" size="small"
-            >크루만들기</v-btn
-          >
-        </v-col>
-      </v-row>
-    </v-container>
-    <hr />
+  <nav>
+    <div class="nav-container">
+      <div class="nav-left">
+        <RouterLink class="navItem" :to="{ name: 'AllCrewList' }">전체크루</RouterLink> |
+        <RouterLink class="navItem" :to="{ name: 'MyCrewList' }">내크루</RouterLink> |
+      </div>
+      <div class="nav-right">
+        <v-btn @click="$router.push('/registCrew')" class="mt-2">크루만들기</v-btn>
+      </div>
+    </div>
+    <hr class="nav-divider" />
     <RouterView />
-  </div>
+  </nav>
 </template>
 
 <script setup></script>
 
 <style scoped>
-a {
+nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.navItem {
+  font-size: 19px;
   text-decoration: none;
   color: grey;
-  font-size: 20px;
-  padding: 20px;
+  font-weight: 600;
+  padding: 0 10px;
 }
+
+.navItem:hover {
+  color: black;
+}
+
 .router-link-exact-active {
-  color: black; /* 활성화된 링크의 텍스트 색상: 검정색 */
+  color: black; 
 }
-div {
-  display: inline;
-  padding: 10px;
+
+.nav-divider {
+  width: 80%; 
+  border: 0;
+  height: 1px;
+  background: #ccc;
+  margin: 20px 0;
 }
 </style>
