@@ -1,5 +1,4 @@
 <template>
-  <h4>"{{ activityName }}"(으)로 검색한 결과입니다</h4>
   <div class="main">
     <div class="videoList">
       <template v-for="video in videoList" :key="video.url">
@@ -19,7 +18,7 @@
                 <v-overlay
                   :model-value="isHovering"
                   contained
-                  scrim="#E0E0E"
+                  scrim="#E0E0E0"
                   class="align-center justify-center"
                 >
                   <v-btn variant="flat">자세히 보기</v-btn>
@@ -44,12 +43,12 @@ const videoList = ref([]);
 
 onMounted(() => {
   http.get(`user/${userId}`).then((res) => {
+    console.log(res.data);
     activityName.value = getActivity(res.data[0].type);
     axios
       .get(
         "https://dapi.kakao.com/v2/search/vclip?query=" +
-          activityName.value +
-          "운동 영상 운동 운동 운동" +
+          getKeyword(1) +
           "&sort=accuracy&size=20",
         {
           headers: {
@@ -105,6 +104,42 @@ const getActivity = (type) => {
       return "크로스핏";
   }
 };
+const getKeyword = (type) => {
+  switch (type) {
+    case 1:
+      return "야외 맨몸운동 유산소";
+    case 2:
+      return "야외 맨몸운동 유산소";
+    case 3:
+      return "야외 기구 유산소";
+    case 4:
+      return "야외 기구 유산소";
+    case 5:
+      return "야외 맨몸운동 무산소";
+    case 6:
+      return "야외 맨몸운동 무산소";
+    case 7:
+      return "야외 기구 무산소";
+    case 8:
+      return "야외 기구 무산소";
+    case 9:
+      return "실내 맨몸운동 유산소";
+    case 10:
+      return "실내 맨몸운동 유산소";
+    case 11:
+      return "실내 기구 유산소";
+    case 12:
+      return "실내 기구 유산소";
+    case 13:
+      return "실내 맨몸운동 무산소";
+    case 14:
+      return "실내 맨몸운동 무산소 ";
+    case 15:
+      return "실내 기구 무산소";
+    case 16:
+      return "실내 기구 무산소";
+  }
+};
 </script>
 
 <style scoped>
@@ -114,9 +149,6 @@ a {
 }
 h2 {
   font-size: 15px;
-}
-h4 {
-  margin-bottom: 20px;
 }
 
 .main {

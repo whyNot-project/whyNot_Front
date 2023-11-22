@@ -4,7 +4,9 @@
       <div>
         <RouterLink to="/" class="navItem">홈</RouterLink>
         |
-        <RouterLink to="/activity" class="navItem">액티비티/예약</RouterLink>
+        <RouterLink to="/activity" class="navItem">액티비티</RouterLink>
+        |
+        <RouterLink to="/reservation" class="navItem">공간 예약</RouterLink>
         |
         <RouterLink to="/crew" class="navItem">크루</RouterLink>
         |
