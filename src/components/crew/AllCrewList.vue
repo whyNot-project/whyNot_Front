@@ -111,11 +111,6 @@ const getValue = (value) => (value ? 1 : 0);
 
 // 스위치 상태에 따라 반환되는 리스트 바꿔주기
 const searchCondition = () => {
-  console.log(getValue(switchValue.value));
-  console.log(getValue(switchValue2.value));
-  console.log(getValue(switchValue3.value));
-  console.log(getValue(switchValue4.value));
-  console.log("----------------------");
   http
     .get("/crew/search", {
       params: {
@@ -126,7 +121,6 @@ const searchCondition = () => {
       },
     })
     .then((res) => {
-      console.log(res.data);
       selectedCrew.value = res.data;
     });
 };
@@ -170,6 +164,8 @@ const temp = function () {
           switchValue2.value = Boolean(isSingle.value);
           switchValue3.value = Boolean(isCardio.value);
           switchValue4.value = Boolean(useEquip.value);
+
+          searchCondition();
         });
     });
 };
