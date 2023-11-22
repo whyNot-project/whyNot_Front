@@ -8,6 +8,7 @@ import crewDetail from "@/components/crew/crewDetail.vue";
 import RegistCrewView from "@/views/RegistCrewView.vue";
 import WnbtiView from "@/views/WnbtiView.vue";
 import AllCrewList from "@/components/crew/AllCrewList.vue";
+import ActivityView from "@/views/ActivityView.vue";
 import MyCrewList from "@/components/crew/MyCrewList.vue";
 
 const router = createRouter({
@@ -27,6 +28,11 @@ const router = createRouter({
       path: "/registUser",
       name: "registUser",
       component: RegistUserView,
+    },
+    {
+      path: "/activity",
+      name: "activity",
+      component: ActivityView,
     },
     {
       path: "/article",

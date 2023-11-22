@@ -4,13 +4,15 @@
       <div>
         <RouterLink to="/" class="navItem">홈</RouterLink>
         |
+        <RouterLink to="/activity" class="navItem">액티비티/예약</RouterLink>
+        |
         <RouterLink to="/crew" class="navItem">크루</RouterLink>
         |
         <RouterLink to="/wnbti" class="navItem">운BTI</RouterLink>
         |
         <RouterLink to="/article" class="navItem">아티클</RouterLink>
       </div>
-      <img src="@/assets/logo.png" class="logoImg" />
+      <img src="@/assets/logo.png" class="logoImg" @click="logoClick" />
       <div class="userNav">
         <button v-if="!loginStatus" class="loginButton" @click="sideBarClick">
           로그인
@@ -122,6 +124,9 @@ onMounted(() => {
     });
   } else loginStatus.value = false;
 });
+const logoClick = () => {
+  router.push("/");
+};
 
 const logout = () => {
   localStorage.clear();
@@ -170,6 +175,10 @@ nav {
   padding: 0 10px;
 }
 
+.navItem:hover {
+  color: black;
+}
+
 .router-link-exact-active {
   color: black; /* 활성화된 링크의 텍스트 색상: 검정색 */
 }
@@ -180,6 +189,7 @@ nav {
   position: absolute;
   transform: translate(-50%, 0);
   left: 50%;
+  cursor: pointer;
 }
 
 .sidebarIcon {
