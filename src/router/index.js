@@ -11,6 +11,7 @@ import AllCrewList from "@/components/crew/AllCrewList.vue";
 import ActivityView from "@/views/ActivityView.vue";
 import MyCrewList from "@/components/crew/MyCrewList.vue";
 import ReservationView from "@/views/ReservationView.vue";
+import SearchCrew from "@/components/crew/SearchCrew.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,6 +68,12 @@ const router = createRouter({
           path: "/userCrew",
           name: "MyCrewList",
           component: MyCrewList,
+        },
+        //검색된 크루
+        {
+          path: "/search/crew",
+          name: "SearchCrew",
+          component: SearchCrew,
         },
       ],
     },
