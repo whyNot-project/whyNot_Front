@@ -11,7 +11,7 @@
       <p class="content">운동 : {{ getActivityName(crews.tag) }}</p>
       <p class="content">장소 : {{ crews.location }}</p>
       <p class="schedule">크루 소개 :{{ crews.content }}</p>
-      <v-btn @click="$router.push('/userCrew')" class="mt-2">가입하기</v-btn>
+      <v-btn @click="joinCrew" class="mt-2">가입하기</v-btn>
     </div>
   </div>
 </template>
@@ -31,10 +31,12 @@ const crewId = route.params.crewId;
 const userId = localStorage.getItem("userId");
 
 const joinCrew = () => {
-  http.post("userCrew", {
+  http.post("/userCrew", {
     userId: userId,
     crewId: crewId,
-  });
+  }).then(()=>{
+    //여기에서 페이지 이동을 해야함
+  })
 };
 const getActivityName = (tag) => {
   switch (tag) {
