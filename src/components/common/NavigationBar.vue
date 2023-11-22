@@ -72,7 +72,7 @@
           <p class="profileNickname">{{ nickname }}</p>
           <a
             @click="showCalendar"
-            data-text="달력 보기 📆"
+            :data-text="calendar ? '달력 숨기기 📆' : '달력 보기 📆'"
             class="calendarButton"
           >
           </a>
@@ -300,6 +300,7 @@ nav {
   text-transform: uppercase;
   letter-spacing: 2px;
   background: #ccc;
+  cursor: pointer;
 }
 .calendarButton:before {
   content: attr(data-text);
