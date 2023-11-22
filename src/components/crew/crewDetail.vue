@@ -14,6 +14,7 @@
       <v-btn @click="joinCrew" class="mt-2">가입하기</v-btn>
     </div>
   </div>
+  <ReplyView/>
 </template>
 
 <script setup>
@@ -21,6 +22,7 @@ import { onBeforeMount, computed } from "vue";
 import { useCrewStore } from "@/stores/Crew";
 import { useRoute } from "vue-router";
 import http from "@/util/http-commons.js";
+import ReplyView from "@/views/ReplyView.vue";
 
 const crewStore = useCrewStore();
 const route = useRoute();
@@ -87,22 +89,20 @@ h2 {
   margin: 20px;
 }
 
-img{
-  margin-right: 200px;
-  margin-top: 40px;
-  
-}
 .crew-details {
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 20px;
+  margin-bottom: 150px;
 }
 
 .crew-avatar {
-  width: 300px;
-  height: 300px;
-  border-radius: 8px;
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;  
+  margin-top: 40px;
+  margin-right: 100px;
 }
 
 .crew-info {

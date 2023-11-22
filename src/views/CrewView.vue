@@ -27,7 +27,7 @@ nav {
 .nav-container {
   display: flex;
   justify-content: space-between;
-  width: 80%; /* 전체 크기 중 80%만 사용하도록 설정 */
+  width: 80%;
 }
 
 .nav-left {
@@ -53,14 +53,14 @@ nav {
 }
 
 .router-link-exact-active {
-  color: black; /* 활성화된 링크의 텍스트 색상: 검정색 */
+  color: black; 
 }
 
 .nav-divider {
-  width: 80%; /* 전체 크기 중 80%만 사용하도록 설정 */
+  width: 80%; 
   border: 0;
   height: 1px;
   background: #ccc;
-  margin: 20px 0; /* 상단과 하단 여백 설정 */
+  margin: 20px 0;
 }
 </style>
