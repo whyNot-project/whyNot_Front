@@ -1,4 +1,5 @@
 <template>
+  <h2>나와 맞는 크루 찾기</h2>
   <div class="switch-container">
     <div class="switches">
       <div class="switch-item" @click="toggleSwitch(1)">
@@ -153,6 +154,13 @@ const temp = function () {
 </script>
 
 <style scoped>
+
+h2{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
 .switch-container {
   display: flex;
   flex-direction: column;
