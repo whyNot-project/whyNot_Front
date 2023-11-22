@@ -1,76 +1,166 @@
 <template>
-  <div>
-    <a class="activityTitle"> Activity에 관한 다양한 정보</a>
+  <div class="main">
+    <h2>
+      <div :style="{ color: textColor }" class="colorName">{{ color }}</div>
+      색의 불꽃을 가진
+      <div :style="{ color: textColor }" class="colorName">{{ nickname }}</div>
+      님을 위한 맞춤 컨텐츠 추천
+    </h2>
+    <ActivityViedo />
+    <h2 class="recommendText">
+      이런 운동은 어때요?
+      <div :style="{ color: textColor }" class="colorName">{{ nickname }}</div>
+      님께 추천된 운동.
+      {{ activityName }}
+    </h2>
+    <RecommendActivityVideo />
   </div>
-  <ul>
-    <li v-for="article in articles" :key="articleId">
-      <img :src="article.articleThumbnail" />
-      <div class="activityCard">
-        <a :href="article.articleUrl" target="_blank">{{
-          article.articleTitle
-        }}</a>
-        <br />
-        <span>{{ article.articleContent }}</span>
-      </div>
-    </li>
-  </ul>
 </template>
 
 <script setup>
-import { computed, onBeforeMount } from "vue";
-import { useArticleStore } from "@/stores/Article";
+import http from "@/util/http-commons.js";
+import { ref, onMounted, computed } from "vue";
+import ActivityViedo from "@/components/activity/ActivityVideo.vue";
+import RecommendActivityVideo from "../components/activity/RecommendActivityVideo.vue";
 
-const articleStore = useArticleStore();
+const activityName = ref("");
+const color = ref("");
+const nickname = ref(localStorage.getItem("nickname"));
+const userId = localStorage.getItem("userId");
 
-let articles = computed(() => articleStore.articleList);
-
-onBeforeMount(() => {
-  articleStore.getArticleList();
+onMounted(() => {
+  http.get(`user/${userId}`).then((res) => {
+    color.value = getColor(res.data[0].type);
+    activityName.value = getActivity(res.data[0].type);
+  });
 });
+
+const getColor = (type) => {
+  switch (type) {
+    case 1:
+      return "네이비 피오니";
+    case 2:
+      return "다우니";
+    case 3:
+      return "댄덜라이언";
+    case 4:
+      return "로즈버드";
+    case 5:
+      return "바닐라 아이스";
+    case 6:
+      return "세룰리안";
+    case 7:
+      return "스위트 핑크";
+    case 8:
+      return "스프라우트";
+    case 9:
+      return "앨리스 블루";
+    case 10:
+      return "오션딥스";
+    case 11:
+      return "오션베이";
+    case 12:
+      return "오아시스";
+    case 13:
+      return "웜플레임";
+    case 14:
+      return "캑터스";
+    case 15:
+      return "퀄트스";
+    case 16:
+      return "페리글라스 블루";
+  }
+};
+
+const textColor = computed(() => {
+  switch (color.value) {
+    case "네이비 피오니":
+      return "#223A5D";
+    case "다우니":
+      return "#82B8AD";
+    case "댄덜라이언":
+      return "#FFD966";
+    case "로즈버드":
+      return "#D9927A";
+    case "바닐라 아이스":
+      return "#E6D0CF";
+    case "세룰리안":
+      return "#9AB7D4";
+    case "스위트 핑크":
+      return "#F1A4AB";
+    case "스프라우트":
+      return "#BCC9A6";
+    case "앨리스 블루":
+      return "#EAEFF9";
+    case "오션딥스":
+      return "#4D6878";
+    case "오션베이":
+      return "#648181";
+    case "오아시스":
+      return "#F2DCB3";
+    case "웜플레임":
+      return "#B6634A";
+    case "캑터스":
+      return "#5A6C55";
+    case "퀄트스":
+      return "#D7D4E9";
+    case "페리글라스 블루":
+      return "#AEB1B0";
+  }
+});
+
+const getActivity = (type) => {
+  switch (type) {
+    case 1:
+      return "러닝";
+    case 2:
+      return "축구";
+    case 3:
+      return "스케이트보드";
+    case 4:
+      return "테니스";
+    case 5:
+      return "등산";
+    case 6:
+      return "요가";
+    case 7:
+      return "골프";
+    case 8:
+      return "패러글라이딩";
+    case 9:
+      return "수영";
+    case 10:
+      return "댄스스포츠";
+    case 11:
+      return "피트니스";
+    case 12:
+      return "폴댄스";
+    case 13:
+      return "발레";
+    case 14:
+      return "복싱";
+    case 15:
+      return "클라이밍";
+    case 16:
+      return "크로스핏";
+  }
+};
 </script>
 
 <style scoped>
-.activityTitle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 30px;
-  padding: 40px;
-  margin: 20px;
-  color: #5e5d5d;
+.main {
+  padding: 30px 40px;
+}
+.colorName {
+  display: inline-block;
 }
 
-.activityCard {
-  display: block;
+h2 {
+  text-align: center;
+  margin-bottom: 50px;
 }
 
-li {
-  margin: 10px;
-  text-align: left;
-  display: flex; /* Flexbox를 사용하여 아이템들을 가로로 정렬합니다. */
-  align-items: flex-start; /* 아이템들을 세로 상단으로 정렬합니다. */
-  padding: 20px;
-}
-
-img {
-  display: block;
-  margin-right: 20px; /* articleThumbnail과 articleTitle 사이의 간격을 조절합니다. */
-  width: 270px;
-  height: 180px;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-  font-weight: bold;
-  font-size: 23px;
-  padding: 20px;
-}
-
-span {
-  color: #666;
-  margin: 5px 0;
-  display: block; /* articleContent가 새로운 줄에서 시작하도록 합니다. */
-  padding: 20px;
+.recommendText {
+  margin-top: 30px;
 }
 </style>
