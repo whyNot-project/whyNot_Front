@@ -32,7 +32,9 @@
           v-model="location"
           label="모일 장소를 적어주세요."
         ></v-text-field>
-        <button @click="write" class="writeButton">소개글 자동 생성 🪄</button>
+        <button @click="write" class="writeButton" type="button">
+          소개글 자동 생성
+        </button>
         <v-text-field
           v-model="content"
           label="크루를 소개하는 글을 적어주세요."
