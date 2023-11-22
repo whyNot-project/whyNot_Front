@@ -142,8 +142,6 @@ const temp = function () {
       userId: userId,
     })
     .then((res) => {
-      console.log(res.data);
-
       isInside.value = res.data[0].isInside;
       isSingle.value = res.data[0].isSingle;
       isCardio.value = res.data[0].isCardio;

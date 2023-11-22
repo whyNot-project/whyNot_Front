@@ -14,7 +14,7 @@ export const useCrewStore = defineStore("crew", () => {
   const myCrewList = ref({});
   //내 크루
   const getMyCrewList = function (userId) {
-    http.get(`userCrew/${userId}`).then((res) => {
+    http.get(`/userCrewList/${userId}`).then((res) => {
       myCrewList.value = res.data;
     });
   };
