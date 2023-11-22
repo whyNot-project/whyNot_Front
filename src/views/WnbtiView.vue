@@ -28,6 +28,7 @@
 import { useTestStore } from "@/stores/Test.js";
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
+import http from "@/util/http-commons.js";
 
 const store = useTestStore();
 const loginStatus = ref(false);
@@ -35,11 +36,58 @@ const testAnswer = ref(store.testAnswer); //결과 배열
 const nickname = ref(localStorage.getItem("nickname"));
 const color = ref(store.getColor);
 const accessToken = ref(localStorage.getItem("accessToken"));
+const userId = localStorage.getItem("userId");
 
 onMounted(() => {
-  if (accessToken.value) loginStatus.value = true;
-  else loginStatus.value = false;
+  if (accessToken.value) {
+    loginStatus.value = true;
+    http.get(`user/${userId}`).then((res) => {
+      //유저의 기존 타입에 맞게 업데이트
+      const type = res.data[0].type;
+      color.value = getColor(type);
+      testAnswer.value = getTestAnswer(type);
+    });
+  } else {
+    loginStatus.value = false;
+  }
 });
+
+const getTestAnswer = (type) => {
+  switch (type) {
+    case 1:
+      return [0, 0, 0, 0];
+    case 2:
+      return [0, 1, 0, 0];
+    case 3:
+      return [0, 0, 1, 0];
+    case 4:
+      return [0, 1, 1, 0];
+    case 5:
+      return [0, 0, 0, 1];
+    case 6:
+      return [0, 1, 0, 1];
+    case 7:
+      return [0, 0, 1, 1];
+    case 8:
+      return [0, 1, 1, 1];
+    case 9:
+      return [1, 0, 0, 0];
+    case 10:
+      return [1, 1, 0, 0];
+    case 11:
+      return [1, 0, 1, 0];
+    case 12:
+      return [1, 1, 1, 0];
+    case 13:
+      return [1, 0, 0, 1];
+    case 14:
+      return [1, 1, 0, 1];
+    case 15:
+      return [1, 0, 1, 1];
+    case 16:
+      return [1, 1, 1, 1];
+  }
+};
 
 const textColor = computed(() => {
   switch (color.value) {
@@ -77,6 +125,43 @@ const textColor = computed(() => {
       return "#AEB1B0";
   }
 });
+
+const getColor = (type) => {
+  switch (type) {
+    case 1:
+      return "네이비 피오니";
+    case 2:
+      return "다우니";
+    case 3:
+      return "댄덜라이언";
+    case 4:
+      return "로즈버드";
+    case 5:
+      return "바닐라 아이스";
+    case 6:
+      return "세룰리안";
+    case 7:
+      return "스위트 핑크";
+    case 8:
+      return "스프라우트";
+    case 9:
+      return "앨리스 블루";
+    case 10:
+      return "오션딥스";
+    case 11:
+      return "오션베이";
+    case 12:
+      return "오아시스";
+    case 13:
+      return "웜플레임";
+    case 14:
+      return "캑터스";
+    case 15:
+      return "퀄트스";
+    case 16:
+      return "페리글라스 블루";
+  }
+};
 
 const router = useRouter();
 const movePage = () => {

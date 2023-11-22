@@ -7,6 +7,13 @@
       님을 위한 맞춤 컨텐츠 추천
     </h2>
     <ActivityViedo />
+    <h2 class="recommendText">
+      이런 운동은 어때요?
+      <div :style="{ color: textColor }" class="colorName">{{ nickname }}</div>
+      님께 추천된 운동.
+      {{ activityName }}
+    </h2>
+    <RecommendActivityVideo />
   </div>
 </template>
 
@@ -14,12 +21,17 @@
 import http from "@/util/http-commons.js";
 import { ref, onMounted, computed } from "vue";
 import ActivityViedo from "@/components/activity/ActivityVideo.vue";
+import RecommendActivityVideo from "../components/activity/RecommendActivityVideo.vue";
+
+const activityName = ref("");
 const color = ref("");
 const nickname = ref(localStorage.getItem("nickname"));
 const userId = localStorage.getItem("userId");
+
 onMounted(() => {
   http.get(`user/${userId}`).then((res) => {
     color.value = getColor(res.data[0].type);
+    activityName.value = getActivity(res.data[0].type);
   });
 });
 
@@ -96,6 +108,43 @@ const textColor = computed(() => {
       return "#AEB1B0";
   }
 });
+
+const getActivity = (type) => {
+  switch (type) {
+    case 1:
+      return "러닝";
+    case 2:
+      return "축구";
+    case 3:
+      return "스케이트보드";
+    case 4:
+      return "테니스";
+    case 5:
+      return "등산";
+    case 6:
+      return "요가";
+    case 7:
+      return "골프";
+    case 8:
+      return "패러글라이딩";
+    case 9:
+      return "수영";
+    case 10:
+      return "댄스스포츠";
+    case 11:
+      return "피트니스";
+    case 12:
+      return "폴댄스";
+    case 13:
+      return "발레";
+    case 14:
+      return "복싱";
+    case 15:
+      return "클라이밍";
+    case 16:
+      return "크로스핏";
+  }
+};
 </script>
 
 <style scoped>
@@ -109,5 +158,9 @@ const textColor = computed(() => {
 h2 {
   text-align: center;
   margin-bottom: 50px;
+}
+
+.recommendText {
+  margin-top: 30px;
 }
 </style>

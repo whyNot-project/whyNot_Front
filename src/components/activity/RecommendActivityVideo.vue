@@ -37,17 +37,19 @@ import { onMounted, ref } from "vue";
 import axios from "axios";
 import http from "@/util/http-commons.js";
 
+const activityName = ref();
 const userId = localStorage.getItem("userId");
 const videoList = ref([]);
 
 onMounted(() => {
   http.get(`user/${userId}`).then((res) => {
     console.log(res.data);
+    activityName.value = getActivity(res.data[0].type);
     axios
       .get(
         "https://dapi.kakao.com/v2/search/vclip?query=" +
-          getKeyword(res.data[0].type) +
-          "&sort=accuracy&size=12",
+          getActivity(res.data[0].type) +
+          "&sort=accuracy&size=10",
         {
           headers: {
             Authorization: "KakaoAK " + "14dc0676c9b73e856d1d8ee9485c1699",
@@ -66,41 +68,40 @@ const truncateTitle = (title) => {
   const maxLength = 18; // 원하는 최대 길이로 수정
   return title.length > maxLength ? title.slice(0, maxLength) + "..." : title;
 };
-
-const getKeyword = (type) => {
+const getActivity = (type) => {
   switch (type) {
     case 1:
-      return "야외 맨몸운동 유산소";
+      return "러닝";
     case 2:
-      return "야외 맨몸운동 유산소";
+      return "축구";
     case 3:
-      return "야외 기구 유산소";
+      return "스케이트보드";
     case 4:
-      return "야외 기구 유산소";
+      return "테니스";
     case 5:
-      return "야외 맨몸운동 무산소";
+      return "등산";
     case 6:
-      return "야외 맨몸운동 무산소";
+      return "요가";
     case 7:
-      return "야외 기구 무산소";
+      return "골프";
     case 8:
-      return "야외 기구 무산소";
+      return "패러글라이딩";
     case 9:
-      return "실내 맨몸운동 유산소";
+      return "수영";
     case 10:
-      return "실내 맨몸운동 유산소";
+      return "댄스스포츠";
     case 11:
-      return "실내 기구 유산소";
+      return "피트니스";
     case 12:
-      return "실내 기구 유산소";
+      return "폴댄스";
     case 13:
-      return "실내 맨몸운동 무산소";
+      return "발레";
     case 14:
-      return "실내 맨몸운동 무산소 ";
+      return "복싱";
     case 15:
-      return "실내 기구 무산소";
+      return "클라이밍";
     case 16:
-      return "실내 기구 무산소";
+      return "크로스핏";
   }
 };
 </script>

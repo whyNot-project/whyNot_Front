@@ -10,6 +10,7 @@ import WnbtiView from "@/views/WnbtiView.vue";
 import AllCrewList from "@/components/crew/AllCrewList.vue";
 import ActivityView from "@/views/ActivityView.vue";
 import MyCrewList from "@/components/crew/MyCrewList.vue";
+import ReservationView from "@/views/ReservationView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +34,11 @@ const router = createRouter({
       path: "/activity",
       name: "activity",
       component: ActivityView,
+    },
+    {
+      path: "/reservation",
+      name: "reservation",
+      component: ReservationView,
     },
     {
       path: "/article",
