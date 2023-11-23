@@ -22,13 +22,19 @@ import http from "@/util/http-commons.js";
 import { ref, onMounted, computed } from "vue";
 import ActivityViedo from "@/components/activity/ActivityVideo.vue";
 import RecommendActivityVideo from "../components/activity/RecommendActivityVideo.vue";
+import { useRouter } from "vue-router";
 
 const activityName = ref("");
 const color = ref("");
 const nickname = ref(localStorage.getItem("nickname"));
 const userId = localStorage.getItem("userId");
+const router = useRouter();
 
 onMounted(() => {
+  if (!localStorage.getItem("accessToken")) {
+    alert("이 서비스를 이용하려면 로그인이 필요해요!");
+    router.push("/");
+  }
   http.get(`user/${userId}`).then((res) => {
     color.value = getColor(res.data[0].type);
     activityName.value = getActivity(res.data[0].type);

@@ -48,6 +48,11 @@ onMounted(() => {
       testAnswer.value = getTestAnswer(type);
     });
   } else {
+    console.log(testAnswer.value);
+    if (testAnswer.value.length === 0) {
+      alert("테스트를 진행한 내역이 없어요! 테스트를 먼저 진행해주세요 :)");
+      router.push("/test");
+    }
     loginStatus.value = false;
   }
 });
