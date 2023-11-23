@@ -103,21 +103,23 @@ const checkboxValue = ref(false);
 
 // 스위치 상태에 따라 값 바꾸기
 const toggleSwitch = (switchVar) => {
-  switch (switchVar) {
-    case 1:
-      switchValue.value = !switchValue.value;
-      break;
-    case 2:
-      switchValue2.value = !switchValue2.value;
-      break;
-    case 3:
-      switchValue3.value = !switchValue3.value;
-      break;
-    case 4:
-      switchValue4.value = !switchValue4.value;
-      break;
+  if (!checkboxValue.value) {
+    switch (switchVar) {
+      case 1:
+        switchValue.value = !switchValue.value;
+        break;
+      case 2:
+        switchValue2.value = !switchValue2.value;
+        break;
+      case 3:
+        switchValue3.value = !switchValue3.value;
+        break;
+      case 4:
+        switchValue4.value = !switchValue4.value;
+        break;
+    }
+    searchCondition();
   }
-  searchCondition();
 };
 
 const getValue = (value) => (value ? 1 : 0);
