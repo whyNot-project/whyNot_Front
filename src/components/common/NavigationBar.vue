@@ -50,6 +50,7 @@
             class="mb-2"
             clearable
             label="아이디"
+            placeholder="아이디를 입력해주세요"
           ></v-text-field>
 
           <v-text-field
@@ -57,6 +58,7 @@
             clearable
             label="비밀번호"
             placeholder="비밀번호를 입력해주세요"
+            type="password"
           ></v-text-field>
 
           <br />

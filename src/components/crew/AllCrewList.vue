@@ -43,10 +43,6 @@
           <h2>{{ crew.crewName }}</h2>
           <p style="font-weight: bold">{{ crew.location }}</p>
           <p>{{ crew.schedule }}</p>
-          <p>
-            {{ crew.memberNum - Math.floor(crew.memberNum / 2) }} /
-            {{ crew.memberNum }}명
-          </p>
           <p>{{ crew.content }}</p>
         </div>
       </div>
@@ -65,10 +61,6 @@
           <h2>{{ crew.crewName }}</h2>
           <p style="font-weight: bold">{{ crew.location }}</p>
           <p>{{ crew.schedule }}</p>
-          <p>
-            {{ crew.memberNum - Math.floor(crew.memberNum / 2) }} /
-            {{ crew.memberNum }}명
-          </p>
           <p>{{ crew.content }}</p>
         </div>
       </div>
@@ -231,6 +223,8 @@ h2 {
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 20px;
+  margin-bottom: 100px;
+  gap: 10px;
 }
 
 .crew-card {
