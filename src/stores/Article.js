@@ -4,7 +4,7 @@ import http from "@/util/http-commons";
 
 export const useArticleStore = defineStore("article", () => {
   //article 리스트
-  const articleList = ref({});
+  const articleList = ref("hey");
 
   const getArticleList = function () {
     console.log("아티클 전체 가져오기");
