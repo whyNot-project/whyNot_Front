@@ -11,10 +11,7 @@
     <div class="crew-info">
       <h1 class="crew-name">{{ crews.crewName }}</h1>
       <p class="content">일시 : {{ crews.schedule }}</p>
-      <p class="content">
-        인원 : {{ crews.memberNum - Math.floor(crews.memberNum / 2) }} /
-        {{ crews.memberNum }}명
-      </p>
+      <p class="content">모집인원 : {{ crews.memberNum }}명</p>
       <p class="content">운동 : {{ getActivityName(crews.tag) }}</p>
       <p class="content">장소 : {{ crews.location }}</p>
       <p class="content">리더 : {{ crews.leader }}</p>
@@ -52,8 +49,13 @@ const joinCrew = () => {
     })
     .then(() => {
       router.push("/userCrew");
+    })
+    .catch(() => {
+      alert("이미 가입한 크루입니다!");
+      router.push("/userCrew");
     });
 };
+
 const getActivityName = (tag) => {
   switch (tag) {
     case 1:
