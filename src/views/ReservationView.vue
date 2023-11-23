@@ -1,8 +1,12 @@
 <template>
   <div class="buttonContainer">
-    <template v-for="space in spaceList" :key="space">
-      <button class="spaceButton" @click="spaceButtonClick(space)">
-        {{ space }}
+    <template v-for="(space, index) in spaceList" :key="space.name">
+      <button
+        class="spaceButton"
+        @click="spaceButtonClick(index)"
+        :class="{ selected: space.selected }"
+      >
+        {{ space.name }}
       </button>
     </template>
   </div>
@@ -33,82 +37,105 @@ import axios from "axios";
 
 const reservationList = ref([]);
 const spaceList = ref([
-  "축구장",
-  "테니스장",
-  "풋살장",
-  "체육관",
-  "야구장",
-  "족구장",
-  "농구장",
-  "배구장",
-  "배드민턴장",
-  "다목적경기장",
-  "골프장",
-  "탁구장",
+  {
+    name: "축구장",
+    selected: true,
+  },
+  {
+    name: "테니스장",
+    selected: false,
+  },
+  {
+    name: "풋살장",
+    selected: false,
+  },
+  {
+    name: "체육관",
+    selected: false,
+  },
+  {
+    name: "다목적경기장",
+    selected: false,
+  },
+  {
+    name: "골프장",
+    selected: false,
+  },
+  {
+    name: "축구장",
+    selected: false,
+  },
 ]);
 const spaceName = ref("축구장");
-const spaceButtonClick = (space) => {
-  spaceName.value = space;
+const spaceButtonClick = (newIdx) => {
+  const oldIdx = spaceList.value.findIndex((e) => e.name === spaceName.value);
+  spaceList.value[oldIdx].selected = false;
+  spaceList.value[newIdx].selected = true;
+  spaceName.value = spaceList.value[newIdx].name;
+  getList();
 };
 
 onMounted(() => {
-  const xmlToJson = (xml) => {
-    // xml => json 변환 xmlToJson함수
-    let obj = {};
+  getList();
+});
 
-    if (xml.nodeType == 1) {
-      // element
-      // do attributes
-      if (xml.attributes.length > 0) {
-        obj["@attributes"] = {};
-        for (let j = 0; j < xml.attributes.length; j++) {
-          let attribute = xml.attributes.item(j);
-          obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
-        }
-      }
-    } else if (xml.nodeType == 3) {
-      // text
-      obj = xml.nodeValue;
-    }
-
-    let textNodes = [].slice.call(xml.childNodes).filter(function (node) {
-      return node.nodeType === 3;
-    });
-    if (xml.hasChildNodes() && xml.childNodes.length === textNodes.length) {
-      obj = [].slice.call(xml.childNodes).reduce(function (text, node) {
-        return text + node.nodeValue;
-      }, "");
-    } else if (xml.hasChildNodes()) {
-      for (let i = 0; i < xml.childNodes.length; i++) {
-        let item = xml.childNodes.item(i);
-        let nodeName = item.nodeName;
-        if (typeof obj[nodeName] == "undefined") {
-          obj[nodeName] = xmlToJson(item);
-        } else {
-          if (typeof obj[nodeName].push == "undefined") {
-            let old = obj[nodeName];
-            obj[nodeName] = [];
-            obj[nodeName].push(old);
-          }
-          obj[nodeName].push(xmlToJson(item));
-        }
-      }
-    }
-
-    return obj;
-  };
-
+const getList = () => {
   axios
     .get(
-      "http://openAPI.seoul.go.kr:8088/4c506d575063756a373371584f5776/xml/ListPublicReservationSport/1/20/축구장"
+      `http://openAPI.seoul.go.kr:8088/4c506d575063756a373371584f5776/xml/ListPublicReservationSport/1/20/${spaceName.value}`
     )
     .then((res) => {
       var XmlNode = new DOMParser().parseFromString(res.data, "text/xml");
-      console.log(xmlToJson(XmlNode).ListPublicReservationSport.row);
       const result = (reservationList.value =
         xmlToJson(XmlNode).ListPublicReservationSport.row);
     });
-});
+};
+
+const xmlToJson = (xml) => {
+  // xml => json 변환 xmlToJson함수
+  let obj = {};
+
+  if (xml.nodeType == 1) {
+    // element
+    // do attributes
+    if (xml.attributes.length > 0) {
+      obj["@attributes"] = {};
+      for (let j = 0; j < xml.attributes.length; j++) {
+        let attribute = xml.attributes.item(j);
+        obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+      }
+    }
+  } else if (xml.nodeType == 3) {
+    // text
+    obj = xml.nodeValue;
+  }
+
+  let textNodes = [].slice.call(xml.childNodes).filter(function (node) {
+    return node.nodeType === 3;
+  });
+  if (xml.hasChildNodes() && xml.childNodes.length === textNodes.length) {
+    obj = [].slice.call(xml.childNodes).reduce(function (text, node) {
+      return text + node.nodeValue;
+    }, "");
+  } else if (xml.hasChildNodes()) {
+    for (let i = 0; i < xml.childNodes.length; i++) {
+      let item = xml.childNodes.item(i);
+      let nodeName = item.nodeName;
+      if (typeof obj[nodeName] == "undefined") {
+        obj[nodeName] = xmlToJson(item);
+      } else {
+        if (typeof obj[nodeName].push == "undefined") {
+          let old = obj[nodeName];
+          obj[nodeName] = [];
+          obj[nodeName].push(old);
+        }
+        obj[nodeName].push(xmlToJson(item));
+      }
+    }
+  }
+
+  return obj;
+};
 </script>
 
 <style scoped>
@@ -202,5 +229,17 @@ a {
   padding: 0 10px;
   font-size: 13px;
   font-weight: 600;
+}
+
+.spaceButton:hover {
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+}
+
+.selected {
+  border: 1px solid white;
+  background-color: black;
+  color: white;
 }
 </style>
