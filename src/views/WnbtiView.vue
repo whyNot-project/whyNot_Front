@@ -4,7 +4,7 @@
       <p class="mainText text1">
         {{ loginStatus ? nickname + "님은," : "당신은" }}
       </p>
-      <div class="answerList subText">
+      <div class="answerList subText" :style="{ color: textColor }">
         <p>{{ testAnswer[0] === 0 ? "실외에서" : "실내에서" }}</p>
         <p>{{ testAnswer[1] === 0 ? "혼자" : "같이" }}</p>
         <p>{{ testAnswer[2] === 0 ? "기구 없이" : "기구로" }}</p>
@@ -190,7 +190,6 @@ const movePage = () => {
 
 .subText {
   font-size: 45px;
-  color: grey;
   font-weight: 700;
   display: flex;
   justify-content: center;
