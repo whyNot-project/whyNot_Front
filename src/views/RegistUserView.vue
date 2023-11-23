@@ -16,6 +16,7 @@
         v-model="password"
         clearable
         label="비밀번호"
+        type="password"
       ></v-text-field>
 
       <v-text-field
