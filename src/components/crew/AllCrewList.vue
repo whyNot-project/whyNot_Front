@@ -3,20 +3,20 @@
   <div class="switch-container">
     <div class="switches">
       <div class="switch-item" @click="toggleSwitch(1)">
-        <div class="switch-label">{{ switchValue ? "실외" : "실내" }}</div>
+        <div class="switch-label">{{ switchValue ? "실내" : "실외" }}</div>
         <div class="switch-toggle" :class="{ active: switchValue }"></div>
       </div>
       <div class="switch-item" @click="toggleSwitch(2)">
-        <div class="switch-label">{{ switchValue2 ? "함께" : "혼자" }}</div>
+        <div class="switch-label">{{ switchValue2 ? "혼자" : "함께" }}</div>
         <div class="switch-toggle" :class="{ active: switchValue2 }"></div>
       </div>
       <div class="switch-item" @click="toggleSwitch(3)">
-        <div class="switch-label">{{ switchValue3 ? "무산소" : "유산소" }}</div>
+        <div class="switch-label">{{ switchValue3 ? "유산소" : "무산소" }}</div>
         <div class="switch-toggle" :class="{ active: switchValue3 }"></div>
       </div>
       <div class="switch-item" @click="toggleSwitch(4)">
         <div class="switch-label">
-          {{ switchValue4 ? "맨몸운동" : "기구사용" }}
+          {{ switchValue4 ? "기구사용" : "맨몸운동" }}
         </div>
         <div class="switch-toggle" :class="{ active: switchValue4 }"></div>
       </div>
@@ -167,13 +167,12 @@ const temp = function () {
             useEquip: `${useEquip.value}`,
           },
         })
-        .then(() => {
+        .then((res) => {
+          selectedCrew.value = res.data;
           switchValue.value = Boolean(isInside.value);
           switchValue2.value = Boolean(isSingle.value);
           switchValue3.value = Boolean(isCardio.value);
           switchValue4.value = Boolean(useEquip.value);
-
-          searchCondition();
         });
     });
 };
