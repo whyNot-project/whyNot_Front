@@ -28,12 +28,13 @@
 <script setup>
 import { onBeforeMount, computed } from "vue";
 import { useCrewStore } from "@/stores/Crew";
-import { useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import http from "@/util/http-commons.js";
 import ReplyView from "@/views/ReplyView.vue";
 
 const crewStore = useCrewStore();
 const route = useRoute();
+const router = useRouter();
 
 let crews = computed(() => crewStore.crewDetail);
 
@@ -42,12 +43,15 @@ const userId = localStorage.getItem("userId");
 
 const joinCrew = () => {
   http
-    .post("/userCrew", {
+    .post("userCrew", {
       userId: userId,
       crewId: crewId,
     })
     .then(() => {
-      //여기에서 페이지 이동을 해야함
+      crewStore.getMyCrewList(userId);
+    })
+    .then(() => {
+      router.push("/userCrew");
     });
 };
 const getActivityName = (tag) => {
