@@ -126,9 +126,9 @@ const searchCondition = () => {
   http
     .get("/crew/search", {
       params: {
-        isCardio: getValue(switchValue.value),
-        isInside: getValue(switchValue2.value),
-        isSingle: getValue(switchValue3.value),
+        isInside: getValue(switchValue.value),
+        isSingle: getValue(switchValue2.value),
+        isCardio: getValue(switchValue3.value),
         useEquip: getValue(switchValue4.value),
       },
     })
