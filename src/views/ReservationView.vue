@@ -61,10 +61,6 @@ const spaceList = ref([
     name: "골프장",
     selected: false,
   },
-  {
-    name: "축구장",
-    selected: false,
-  },
 ]);
 const spaceName = ref("축구장");
 const spaceButtonClick = (newIdx) => {
