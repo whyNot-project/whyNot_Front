@@ -167,7 +167,8 @@ const onSubmit = () => {
           },
         })
         .then((res) => {
-          const imageUrl = res.data;
+          console.log(res.data);
+          const imageUrl = "/" + res.data;
           profileImg.value = imageUrl;
         });
     });
