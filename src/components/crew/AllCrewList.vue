@@ -231,6 +231,8 @@ h2 {
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 20px;
+  margin-bottom: 100px;
+  gap: 10px;
 }
 
 .crew-card {
