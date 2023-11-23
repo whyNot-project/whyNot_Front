@@ -41,12 +41,19 @@ const userId = localStorage.getItem("userId");
 onMounted(() => {
   if (accessToken.value) {
     loginStatus.value = true;
-    http.get(`user/${userId}`).then((res) => {
-      //유저의 기존 타입에 맞게 업데이트
-      const type = res.data[0].type;
-      color.value = getColor(type);
-      testAnswer.value = getTestAnswer(type);
-    });
+    http
+      .get(`user/${userId}`, {
+        headers: {
+          "access-token": localStorage.getItem("accessToken"),
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        //유저의 기존 타입에 맞게 업데이트
+        const type = res.data[0].type;
+        color.value = getColor(type);
+        testAnswer.value = getTestAnswer(type);
+      });
   } else {
     console.log(testAnswer.value);
     if (testAnswer.value.length === 0) {

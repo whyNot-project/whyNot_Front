@@ -11,7 +11,7 @@
     <div class="crew-info">
       <h1 class="crew-name">{{ crews.crewName }}</h1>
       <p class="content">일시 : {{ crews.schedule }}</p>
-      <p class="content">모집인원 : {{ crews.memberNum }}명</p>
+      <p class="content">인원 : {{ joinNum }} / {{ crews.memberNum }}명</p>
       <p class="content">운동 : {{ getActivityName(crews.tag) }}</p>
       <p class="content">장소 : {{ crews.location }}</p>
       <p class="content">리더 : {{ crews.leader }}</p>
@@ -19,15 +19,13 @@
       <v-btn @click="joinCrew" class="mt-2">가입하기</v-btn>
     </div>
   </div>
-  <ReplyView />
 </template>
 
 <script setup>
-import { onBeforeMount, computed } from "vue";
+import { onBeforeMount, computed, onMounted, ref } from "vue";
 import { useCrewStore } from "@/stores/Crew";
 import { useRouter, useRoute } from "vue-router";
 import http from "@/util/http-commons.js";
-import ReplyView from "@/views/ReplyView.vue";
 
 const crewStore = useCrewStore();
 const route = useRoute();
@@ -38,22 +36,34 @@ let crews = computed(() => crewStore.crewDetail);
 const crewId = route.params.crewId;
 const userId = localStorage.getItem("userId");
 
+const joinNum = ref();
+
+onMounted(() => {
+  http.get(`userCrew/joinNum/${crewId}`).then((res) => {
+    joinNum.value = res.data;
+  });
+});
+
 const joinCrew = () => {
-  http
-    .post("userCrew", {
-      userId: userId,
-      crewId: crewId,
-    })
-    .then(() => {
-      crewStore.getMyCrewList(userId);
-    })
-    .then(() => {
-      router.push("/userCrew");
-    })
-    .catch(() => {
-      alert("이미 가입한 크루입니다!");
-      router.push("/userCrew");
-    });
+  if (joinNum.value >= crews.value.memberNum) {
+    alert("아쉽지만 인원이 다 찼어요. 다른 크루를 가입해주세요");
+  } else {
+    http
+      .post("userCrew", {
+        userId: userId,
+        crewId: crewId,
+      })
+      .then(() => {
+        crewStore.getMyCrewList(userId);
+      })
+      .then(() => {
+        router.push("/userCrew");
+      })
+      .catch(() => {
+        alert("이미 가입한 크루입니다!");
+        router.push("/userCrew");
+      });
+  }
 };
 
 const getActivityName = (tag) => {

@@ -132,7 +132,7 @@ const onSubmit = () => {
   for (let key of formData.keys()) {
     console.log(key, ":", formData.get(key));
   }
-  httpMultipart.post("user", formData).then(() => {
+  httpMultipart.post("signup", formData).then(() => {
     //회원가입 성공하면 로그인 처리
     http
       .post("login", {

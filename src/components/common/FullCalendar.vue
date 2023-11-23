@@ -17,10 +17,12 @@ export default {
     });
 
     const updateCalendarOptions = () => {
-      calendarOptions.value.events = myCrewList.value.map((crew) => ({
-        title: crew.crewName,
-        start: crew.schedule, // Adjust accordingly based on your data structure
-      }));
+      if (myCrewList.value) {
+        calendarOptions.value.events = myCrewList.value.map((crew) => ({
+          title: crew.crewName,
+          start: crew.schedule,
+        }));
+      }
     };
 
     const calendarOptions = ref({

@@ -1,4 +1,11 @@
 <template>
+  <div class="buttonContainer">
+    <template v-for="space in spaceList" :key="space">
+      <button class="spaceButton" @click="spaceButtonClick(space)">
+        {{ space }}
+      </button>
+    </template>
+  </div>
   <div class="reservationList">
     <template v-for="reservation in reservationList" :key="reservation.url">
       <div class="card">
@@ -25,7 +32,24 @@ import { onMounted, ref } from "vue";
 import axios from "axios";
 
 const reservationList = ref([]);
-const titleText = ref();
+const spaceList = ref([
+  "축구장",
+  "테니스장",
+  "풋살장",
+  "체육관",
+  "야구장",
+  "족구장",
+  "농구장",
+  "배구장",
+  "배드민턴장",
+  "다목적경기장",
+  "골프장",
+  "탁구장",
+]);
+const spaceName = ref("축구장");
+const spaceButtonClick = (space) => {
+  spaceName.value = space;
+};
 
 onMounted(() => {
   const xmlToJson = (xml) => {
@@ -76,7 +100,7 @@ onMounted(() => {
 
   axios
     .get(
-      "http://openAPI.seoul.go.kr:8088/4c506d575063756a373371584f5776/xml/ListPublicReservationSport/1/20/테니스장"
+      "http://openAPI.seoul.go.kr:8088/4c506d575063756a373371584f5776/xml/ListPublicReservationSport/1/20/축구장"
     )
     .then((res) => {
       var XmlNode = new DOMParser().parseFromString(res.data, "text/xml");
@@ -162,5 +186,21 @@ a {
 
 .material-symbols-outlined {
   vertical-align: middle;
+}
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 40px 50px 0px 50px;
+}
+.spaceButton {
+  width: 100px;
+  height: 40px;
+  border: 1px solid grey;
+  border-radius: 25px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 600;
 }
 </style>
