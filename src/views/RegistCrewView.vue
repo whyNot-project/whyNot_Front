@@ -79,10 +79,14 @@ const onRegist = () => {
     })
     //내 크루에 추가
     .then((res) => {
-      http.post("userCrew", {
-        userId: userId,
-        crewId: res.data[0].crewId,
-      });
+      http
+        .post("userCrew", {
+          userId: userId,
+          crewId: res.data[0].crewId,
+        })
+        .then(() => {
+          router.push("/userCrew");
+        });
     });
 };
 
