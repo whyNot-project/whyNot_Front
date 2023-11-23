@@ -2,11 +2,20 @@
   <h2>내 크루 리스트</h2>
   <div class="switch-container">
     <div class="crew-list">
-      <div v-for="crew in myCrews" :key="crew.crewId" class="crew-card" @click="$router.push(`/crew/${crew.crewId}`)">
-        <img :src="`/fires/${crew.tag}.png`" alt="Crew Image" class="crew-avatar" />
+      <div
+        v-for="crew in myCrews"
+        :key="crew.crewId"
+        class="crew-card"
+        @click="$router.push(`/crew/${crew.crewId}`)"
+      >
+        <img
+          :src="`/fires/${crew.tag}.png`"
+          alt="Crew Image"
+          class="crew-avatar"
+        />
         <div class="crew-details">
           <h2>{{ crew.crewName }}</h2>
-          <p style="font-weight: bold;">{{ crew.location }}</p>
+          <p style="font-weight: bold">{{ crew.location }}</p>
           <p>{{ crew.schedule }}</p>
           <p>{{ crew.content }}</p>
         </div>
@@ -18,10 +27,8 @@
 <script setup>
 import { computed, onBeforeMount } from "vue";
 import { useCrewStore } from "@/stores/Crew";
-import { useRoute } from "vue-router";
 
 const crewStore = useCrewStore();
-const route = useRoute();
 
 let myCrews = computed(() => crewStore.myCrewList);
 
@@ -33,8 +40,7 @@ onBeforeMount(() => {
 </script>
 
 <style scoped>
-
-h2{
+h2 {
   display: flex;
   flex-direction: column;
   align-items: center;

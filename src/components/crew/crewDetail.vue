@@ -2,19 +2,27 @@
   <h2>크루 상세보기</h2>
   <div class="crew-details">
     <div class="crew-image">
-      <img :src="`/fires/${crews.tag}.png`" alt="Crew Image" class="crew-avatar" />
+      <img
+        :src="`/fires/${crews.tag}.png`"
+        alt="Crew Image"
+        class="crew-avatar"
+      />
     </div>
     <div class="crew-info">
       <h1 class="crew-name">{{ crews.crewName }}</h1>
       <p class="content">일시 : {{ crews.schedule }}</p>
-      <p class="content">인원 : {{crews.memberNum - Math.floor(crews.memberNum/2)}} / {{ crews.memberNum }}명</p>
+      <p class="content">
+        인원 : {{ crews.memberNum - Math.floor(crews.memberNum / 2) }} /
+        {{ crews.memberNum }}명
+      </p>
       <p class="content">운동 : {{ getActivityName(crews.tag) }}</p>
       <p class="content">장소 : {{ crews.location }}</p>
+      <p class="content">리더 : {{ crews.leader }}</p>
       <p class="schedule">크루 소개 :{{ crews.content }}</p>
       <v-btn @click="joinCrew" class="mt-2">가입하기</v-btn>
     </div>
   </div>
-  <ReplyView/>
+  <ReplyView />
 </template>
 
 <script setup>
@@ -33,12 +41,14 @@ const crewId = route.params.crewId;
 const userId = localStorage.getItem("userId");
 
 const joinCrew = () => {
-  http.post("/userCrew", {
-    userId: userId,
-    crewId: crewId,
-  }).then(()=>{
-    //여기에서 페이지 이동을 해야함
-  })
+  http
+    .post("/userCrew", {
+      userId: userId,
+      crewId: crewId,
+    })
+    .then(() => {
+      //여기에서 페이지 이동을 해야함
+    });
 };
 const getActivityName = (tag) => {
   switch (tag) {
@@ -83,7 +93,6 @@ onBeforeMount(() => {
 </script>
 
 <style scoped>
-
 h2 {
   text-align: center;
   margin: 20px;
@@ -100,7 +109,7 @@ h2 {
 .crew-avatar {
   width: 200px;
   height: 200px;
-  border-radius: 8px;  
+  border-radius: 8px;
   margin-top: 40px;
   margin-right: 100px;
 }
@@ -125,5 +134,4 @@ h2 {
   font-size: 16px;
   margin-bottom: 10px;
 }
-
 </style>

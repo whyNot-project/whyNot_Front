@@ -56,6 +56,7 @@
 <script setup>
 import { ref } from "vue";
 import http from "@/util/http-commons.js";
+import { useCrewStore } from "@/stores/Crew";
 
 const crewName = ref("");
 const schedule = ref("");
@@ -65,6 +66,8 @@ const location = ref("");
 const content = ref("");
 
 const userId = localStorage.getItem("userId");
+
+const crewStore = useCrewStore();
 
 const onRegist = () => {
   http
@@ -79,10 +82,14 @@ const onRegist = () => {
     })
     //내 크루에 추가
     .then((res) => {
-      http.post("userCrew", {
-        userId: userId,
-        crewId: res.data[0].crewId,
-      });
+      http
+        .post("userCrew", {
+          userId: userId,
+          crewId: res.data[0].crewId,
+        })
+        .then(() => {
+          crewStore.getMyCrewList(userId);
+        });
     });
 };
 

@@ -20,10 +20,11 @@
         </div>
         <div class="switch-toggle" :class="{ active: switchValue4 }"></div>
       </div>
-      <div class="switch-item">
-        <v-checkbox v-model="checkboxValue" label="전체 크루 보기"></v-checkbox>
-      </div>
     </div>
+    <div class="checkbox-item">
+      <v-checkbox v-model="checkboxValue" label="전체 크루 보기"></v-checkbox>
+    </div>
+    <div></div>
 
     <div class="crew-list">
       <div
@@ -157,7 +158,6 @@ const temp = function () {
       isSingle.value = res.data[0].isSingle;
       isCardio.value = res.data[0].isCardio;
       useEquip.value = res.data[0].useEquip;
-      console.log(res.data);
       http
         .get("/crew/search", {
           params: {
@@ -179,6 +179,10 @@ const temp = function () {
 </script>
 
 <style scoped>
+.checkbox-item {
+  margin-top: 20px;
+}
+
 h2 {
   display: flex;
   flex-direction: column;
@@ -189,6 +193,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 30px;
 }
 
 .switches {
