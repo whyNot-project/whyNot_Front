@@ -48,6 +48,11 @@ onMounted(() => {
       testAnswer.value = getTestAnswer(type);
     });
   } else {
+    console.log(testAnswer.value);
+    if (testAnswer.value.length === 0) {
+      alert("테스트를 진행한 내역이 없어요! 테스트를 먼저 진행해주세요 :)");
+      router.push("/test");
+    }
     loginStatus.value = false;
   }
 });
@@ -171,7 +176,7 @@ const movePage = () => {
 
 <style scoped>
 .mainSection {
-  padding: 80px 200px;
+  padding: 65px 250px;
 }
 .answerList {
   display: flex;
@@ -179,12 +184,12 @@ const movePage = () => {
 }
 
 .mainText {
-  font-size: 40px;
+  font-size: 35px;
   font-weight: 700;
 }
 
 .subText {
-  font-size: 25px;
+  font-size: 45px;
   color: grey;
   font-weight: 700;
   display: flex;
@@ -207,6 +212,7 @@ const movePage = () => {
 }
 
 .text2 {
+  margin-top: 40px;
   display: flex;
   justify-content: right;
 }

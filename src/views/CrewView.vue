@@ -2,11 +2,19 @@
   <nav>
     <div class="nav-container">
       <div class="nav-left">
-        <RouterLink class="navItem" :to="{ name: 'AllCrewList' }">전체크루</RouterLink> |
-        <RouterLink class="navItem" :to="{ name: 'MyCrewList' }">내크루</RouterLink> |
+        <RouterLink class="navItem" :to="{ name: 'AllCrewList' }"
+          >전체크루</RouterLink
+        >
+        |
+        <RouterLink class="navItem" :to="{ name: 'MyCrewList' }"
+          >내크루</RouterLink
+        >
+        |
       </div>
       <div class="nav-right">
-        <v-btn @click="$router.push('/registCrew')" class="mt-2">크루만들기</v-btn>
+        <v-btn @click="$router.push('/registCrew')" class="mt-2"
+          >크루만들기</v-btn
+        >
       </div>
     </div>
     <hr class="nav-divider" />
@@ -14,7 +22,18 @@
   </nav>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+onMounted(() => {
+  if (!localStorage.getItem("accessToken")) {
+    alert("이 서비스를 이용하려면 로그인이 필요해요!");
+    router.push("/");
+  }
+});
+</script>
 
 <style scoped>
 nav {
@@ -53,11 +72,11 @@ nav {
 }
 
 .router-link-exact-active {
-  color: black; 
+  color: black;
 }
 
 .nav-divider {
-  width: 80%; 
+  width: 80%;
   border: 0;
   height: 1px;
   background: #ccc;

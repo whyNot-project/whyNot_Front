@@ -17,15 +17,15 @@
 </template>
 
 <script setup>
-import { computed, onBeforeMount } from "vue";
-import { useArticleStore } from "@/stores/Article";
+import { onMounted, ref } from "vue";
+import http from "@/util/http-commons.js";
 
-const articleStore = useArticleStore();
+const articles = ref();
 
-let articles = computed(() => articleStore.articleList);
-
-onBeforeMount(() => {
-  articleStore.getArticleList();
+onMounted(() => {
+  http.get("article").then((res) => {
+    articles.value = res.data;
+  });
 });
 </script>
 
