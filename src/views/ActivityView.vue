@@ -10,8 +10,8 @@
     <h2 class="recommendText">
       이런 운동은 어때요?
       <div :style="{ color: textColor }" class="colorName">{{ nickname }}</div>
-      님께 추천된 운동.
-      {{ activityName }}
+      님께 추천된
+      {{ activityName }} 콘텐츠
     </h2>
     <RecommendActivityVideo />
   </div>
