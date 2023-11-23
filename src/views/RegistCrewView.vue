@@ -54,11 +54,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import http from "@/util/http-commons.js";
-///
 import { useCrewStore } from "@/stores/Crew";
-///
 
 const crewName = ref("");
 const schedule = ref("");
@@ -69,10 +67,7 @@ const content = ref("");
 
 const userId = localStorage.getItem("userId");
 
-/////
-let myCrews = computed(() => crewStore.myCrewList);
 const crewStore = useCrewStore();
-///
 
 const onRegist = () => {
   http
@@ -94,7 +89,6 @@ const onRegist = () => {
         })
         .then(() => {
           crewStore.getMyCrewList(userId);
-          // router.push("/userCrew");
         });
     });
 };
