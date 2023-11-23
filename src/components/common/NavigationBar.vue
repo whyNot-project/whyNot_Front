@@ -118,12 +118,19 @@ const showCalendar = () => {
 onMounted(() => {
   if (accessToken.value) {
     loginStatus.value = true;
-    http.get(`user/profile/${userId.value}`).then((res) => {
-      const imageUrl = res.data;
-      const staticStrIndex = imageUrl.indexOf("static");
-      const imageUrlpath = imageUrl.substring(staticStrIndex);
-      profileImg.value = imageUrlpath;
-    });
+    http
+      .get(`user/profile/${userId.value}`, {
+        headers: {
+          "access-token": localStorage.getItem("accessToken"),
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        const imageUrl = res.data;
+        const staticStrIndex = imageUrl.indexOf("static");
+        const imageUrlpath = imageUrl.substring(staticStrIndex);
+        profileImg.value = imageUrlpath;
+      });
   } else loginStatus.value = false;
 });
 const logoClick = () => {
@@ -152,10 +159,17 @@ const onSubmit = () => {
       sideBarShow.value = !sideBarShow.value;
       loginStatus.value = true;
       nickname.value = localStorage.getItem("nickname");
-      http.get(`user/profile/${id.value}`).then((res) => {
-        const imageUrl = res.data;
-        profileImg.value = imageUrl;
-      });
+      http
+        .get(`user/profile/${id.value}`, {
+          headers: {
+            "access-token": localStorage.getItem("accessToken"),
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          const imageUrl = res.data;
+          profileImg.value = imageUrl;
+        });
     });
 };
 </script>

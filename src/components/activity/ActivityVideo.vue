@@ -41,26 +41,33 @@ const userId = localStorage.getItem("userId");
 const videoList = ref([]);
 
 onMounted(() => {
-  http.get(`user/${userId}`).then((res) => {
-    console.log(res.data);
-    axios
-      .get(
-        "https://dapi.kakao.com/v2/search/vclip?query=" +
-          getKeyword(res.data[0].type) +
-          "&sort=accuracy&size=12",
-        {
-          headers: {
-            Authorization: "KakaoAK " + "14dc0676c9b73e856d1d8ee9485c1699",
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        console.log("요청 성공!");
-        console.log(res.data.documents);
-        videoList.value = res.data.documents;
-      });
-  });
+  http
+    .get(`user/${userId}`, {
+      headers: {
+        "access-token": localStorage.getItem("accessToken"),
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+      axios
+        .get(
+          "https://dapi.kakao.com/v2/search/vclip?query=" +
+            getKeyword(res.data[0].type) +
+            "&sort=accuracy&size=12",
+          {
+            headers: {
+              Authorization: "KakaoAK " + "14dc0676c9b73e856d1d8ee9485c1699",
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log("요청 성공!");
+          console.log(res.data.documents);
+          videoList.value = res.data.documents;
+        });
+    });
 });
 const truncateTitle = (title) => {
   const maxLength = 18; // 원하는 최대 길이로 수정

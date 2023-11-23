@@ -35,10 +35,17 @@ onMounted(() => {
     alert("이 서비스를 이용하려면 로그인이 필요해요!");
     router.push("/");
   }
-  http.get(`user/${userId}`).then((res) => {
-    color.value = getColor(res.data[0].type);
-    activityName.value = getActivity(res.data[0].type);
-  });
+  http
+    .get(`user/${userId}`, {
+      headers: {
+        "access-token": localStorage.getItem("accessToken"),
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      color.value = getColor(res.data[0].type);
+      activityName.value = getActivity(res.data[0].type);
+    });
 });
 
 const getColor = (type) => {
