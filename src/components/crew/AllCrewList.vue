@@ -3,19 +3,21 @@
   <div class="switch-container">
     <div class="switches">
       <div class="switch-item" @click="toggleSwitch(1)">
-        <div class="switch-label">{{ switchValue ? '실외' : '실내' }}</div>
+        <div class="switch-label">{{ switchValue ? "실내" : "실외" }}</div>
         <div class="switch-toggle" :class="{ active: switchValue }"></div>
       </div>
       <div class="switch-item" @click="toggleSwitch(2)">
-        <div class="switch-label">{{ switchValue2 ? '함께' : '혼자' }}</div>
+        <div class="switch-label">{{ switchValue2 ? "혼자" : "함께" }}</div>
         <div class="switch-toggle" :class="{ active: switchValue2 }"></div>
       </div>
       <div class="switch-item" @click="toggleSwitch(3)">
-        <div class="switch-label">{{ switchValue3 ? '무산소' : '유산소' }}</div>
-        <div class="switch-toggle" :class="{ active: switchValue3}"></div>
+        <div class="switch-label">{{ switchValue3 ? "유산소" : "무산소" }}</div>
+        <div class="switch-toggle" :class="{ active: switchValue3 }"></div>
       </div>
       <div class="switch-item" @click="toggleSwitch(4)">
-        <div class="switch-label">{{ switchValue4 ? '맨몸운동' : '기구사용' }}</div>
+        <div class="switch-label">
+          {{ switchValue4 ? "기구사용" : "맨몸운동" }}
+        </div>
         <div class="switch-toggle" :class="{ active: switchValue4 }"></div>
       </div>
       <div class="switch-item">
@@ -24,23 +26,48 @@
     </div>
 
     <div class="crew-list">
-      <div v-if="checkboxValue" class="crew-card" v-for="crew in crews" :key="crew.crewId" @click="$router.push(`/crew/${crew.crewId}`)">
-        <img :src="`/fires/${crew.tag}.png`" alt="Crew Image" class="crew-avatar" />
+      <div
+        v-if="checkboxValue"
+        class="crew-card"
+        v-for="crew in crews"
+        :key="crew.crewId"
+        @click="$router.push(`/crew/${crew.crewId}`)"
+      >
+        <img
+          :src="`/fires/${crew.tag}.png`"
+          alt="Crew Image"
+          class="crew-avatar"
+        />
         <div class="crew-details">
           <h2>{{ crew.crewName }}</h2>
-          <p style="font-weight: bold;">{{ crew.location }}</p>
+          <p style="font-weight: bold">{{ crew.location }}</p>
           <p>{{ crew.schedule }}</p>
-          <p>{{crew.memberNum - Math.floor(crew.memberNum/2)}} / {{ crew.memberNum }}명</p>
+          <p>
+            {{ crew.memberNum - Math.floor(crew.memberNum / 2) }} /
+            {{ crew.memberNum }}명
+          </p>
           <p>{{ crew.content }}</p>
         </div>
       </div>
-      <div v-else class="crew-card" v-for="crew in selectedCrew" @click="$router.push(`/crew/${crew.crewId}`)">
-        <img :src="`/fires/${crew.tag}.png`" alt="Crew Image" class="crew-avatar" />
+      <div
+        v-else
+        class="crew-card"
+        v-for="crew in selectedCrew"
+        @click="$router.push(`/crew/${crew.crewId}`)"
+      >
+        <img
+          :src="`/fires/${crew.tag}.png`"
+          alt="Crew Image"
+          class="crew-avatar"
+        />
         <div class="crew-details">
           <h2>{{ crew.crewName }}</h2>
-          <p style="font-weight: bold;">{{ crew.location }}</p>
+          <p style="font-weight: bold">{{ crew.location }}</p>
           <p>{{ crew.schedule }}</p>
-          <p>{{crew.memberNum - Math.floor(crew.memberNum/2)}} / {{ crew.memberNum }}명</p>
+          <p>
+            {{ crew.memberNum - Math.floor(crew.memberNum / 2) }} /
+            {{ crew.memberNum }}명
+          </p>
           <p>{{ crew.content }}</p>
         </div>
       </div>
@@ -99,9 +126,9 @@ const searchCondition = () => {
   http
     .get("/crew/search", {
       params: {
-        isCardio: getValue(switchValue.value),
-        isInside: getValue(switchValue2.value),
-        isSingle: getValue(switchValue3.value),
+        isInside: getValue(switchValue.value),
+        isSingle: getValue(switchValue2.value),
+        isCardio: getValue(switchValue3.value),
         useEquip: getValue(switchValue4.value),
       },
     })
@@ -116,7 +143,6 @@ const searchCondition = () => {
 
 const temp = function () {
   const userId = localStorage.getItem("userId");
-
   const isInside = ref("");
   const isSingle = ref("");
   const isCardio = ref("");
@@ -131,7 +157,7 @@ const temp = function () {
       isSingle.value = res.data[0].isSingle;
       isCardio.value = res.data[0].isCardio;
       useEquip.value = res.data[0].useEquip;
-
+      console.log(res.data);
       http
         .get("/crew/search", {
           params: {
@@ -141,21 +167,19 @@ const temp = function () {
             useEquip: `${useEquip.value}`,
           },
         })
-        .then(() => {
+        .then((res) => {
+          selectedCrew.value = res.data;
           switchValue.value = Boolean(isInside.value);
           switchValue2.value = Boolean(isSingle.value);
           switchValue3.value = Boolean(isCardio.value);
           switchValue4.value = Boolean(useEquip.value);
-
-          searchCondition();
         });
     });
 };
 </script>
 
 <style scoped>
-
-h2{
+h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -228,5 +252,4 @@ h2{
 .crew-details {
   text-align: center;
 }
-
 </style>
